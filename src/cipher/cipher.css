@@ -19,7 +19,7 @@ body:before{position:fixed;inset:0;content:"";pointer-events:none;background-ima
 .entry-actions .primary-btn{max-width:min(100%,440px);line-height:1.45;text-align:left}
 .brand-mark{overflow:hidden;border:0;background:transparent}
 .brand-mark img{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:screen}
-.key-body:before{content:"";inset:26px 65px auto auto;width:48px;height:48px;background:url("cissna-hooded-emblem.png") center/contain no-repeat;mix-blend-mode:screen;z-index:1}
+.key-body:before{content:"";inset:26px 65px auto auto;width:48px;height:48px;background:url("/__l5e/assets-v1/ddccdf86-76a7-43ea-a7eb-309863eda91b/cissna-hooded-emblem.png") center/contain no-repeat;mix-blend-mode:screen;z-index:1}
 .usb-connect{padding-inline:10px;color:#8ea1a8;letter-spacing:.08em}
 .entry-footer{display:flex;flex-direction:column;align-items:center;gap:9px}
 .demo-button{padding:5px 11px;border:1px solid rgba(157,185,205,.18);border-radius:2px;background:transparent;color:#75858d;cursor:pointer;font:8px var(--mono);letter-spacing:.12em;text-transform:uppercase;transition:border-color .18s,color .18s}
@@ -85,4 +85,9 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 @supports (min-height:100dvh){#entry{min-height:100dvh}}
 #workspace{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
 .conversation,.cyber-screen,.transfer-files,.file-list,.file-editor,.sequence-terminal-body{-webkit-overflow-scrolling:touch}
+/* Reserve a strip at the top for the persistent prop notice so it never covers page controls. */
+:root{--prop-notice-space:calc(30px + env(safe-area-inset-top))}
+#entry{padding-top:var(--prop-notice-space)}
+#workspace{top:var(--prop-notice-space)}
+@media (max-width:460px){:root{--prop-notice-space:calc(44px + env(safe-area-inset-top))}}
 @media (hover:none){.file-actions{opacity:.85}.file-action{min-width:26px;height:30px}}
