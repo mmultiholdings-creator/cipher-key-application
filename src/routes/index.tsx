@@ -1,24 +1,41 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import cipherCss from "@/cipher/cipher.css?url";
+import cipherMarkupTemplate from "@/cipher/cipher-markup.html?raw";
+import { startCipher } from "@/cipher/engine";
+import logoAsset from "@/assets/cissna-hooded-emblem.png.asset.json";
+
+// Original page markup, with the uploaded emblem swapped in. Constant string so
+// React never re-renders over the DOM the page script manages.
+const cipherMarkup = cipherMarkupTemplate.split("__CIPHER_LOGO__").join(logoAsset.url);
+
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "C.I.P.H.E.R. — Secure Workspace" },
+      {
+        name: "description",
+        content:
+          "C.I.P.H.E.R. secure workspace — a fictional interactive prop with a field terminal, editable files and perimeter radar.",
+      },
+      { property: "og:title", content: "C.I.P.H.E.R. — Secure Workspace" },
+      {
+        property: "og:description",
+        content: "A fictional interactive prop. No real cyber operations.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+    links: [{ rel: "stylesheet", href: cipherCss }],
+  }),
+  component: CipherPage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+function CipherPage() {
+  useEffect(() => {
+    startCipher();
+  }, []);
+
+  return <div id="cipher-app" dangerouslySetInnerHTML={{ __html: cipherMarkup }} />;
 }
