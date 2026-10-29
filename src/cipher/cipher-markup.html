@@ -1,0 +1,133 @@
+
+<section id="entry">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark"><img src="__CIPHER_LOGO__" alt=""></span><span>C.I.P.H.E.R.</span></div>
+    <div class="top-status"><span class="status-dot"></span><span id="entry-status">Device not detected</span></div>
+  </header>
+  <main class="entry-body">
+    <section class="entry-copy">
+      <p class="eyebrow">Physical key authentication · 01</p>
+      <h1>insert your<br><span>C.I.P.H.E.R Key</span></h1>
+      <p class="definition">C.I.P.H.E.R. Key — Confidential Information Protection, Hacking, Encryption &amp; Response</p>
+      <div class="device-row"><span class="device-indicator" id="device-indicator"></span><span id="device-copy">Awaiting DataTransferPad signal or physical key insertion</span></div>
+      <div class="entry-actions"><button class="primary-btn" id="authenticate-key">Connect C.I.P.H.E.R Key via Wireless DataTransferPad <span aria-hidden="true">→</span></button><button class="text-button usb-connect" id="usb-connect" type="button">Physical USB key</button></div>
+      <p class="entry-message" id="entry-message" role="status" aria-live="polite"></p>
+    </section>
+    <div class="device-stage" aria-label="Illustration of a physical security key">
+      <div class="orbit"></div><div class="scan-line"></div>
+      <div class="key-device"><div class="key-blade"></div><div class="key-body"><span class="key-ring"></span></div></div>
+      <div class="device-caption"><b>Hardware token</b><br>Personal · Encrypted · Offline</div>
+    </div>
+  </main>
+  <footer class="entry-footer"><span>C.I.P.H.E.R. secure workspace · awaiting hardware signal</span><button class="demo-button" id="demo-mode" type="button">demo</button></footer>
+</section>
+<section id="workspace" class="hidden" aria-label="C.I.P.H.E.R. workspace">
+  <header class="workspace-bar">
+    <div class="bar-left"><div class="brand"><span class="brand-mark"><img src="__CIPHER_LOGO__" alt=""></span><span>C.I.P.H.E.R.</span></div><span class="bar-divider"></span><span class="crumb"><span>KEY /</span> PRIVATE WORKSPACE</span></div>
+    <div class="bar-right"><span class="mini-status" id="mount-status"><span class="status-dot"></span> Device inserted</span><button class="text-button" id="eject-key">Eject device</button></div>
+  </header>
+  <div class="alarm-banner" id="alarm-banner" role="alert">⚠ EMERGENCY LOCKDOWN ACTIVE · DOCUMENTS CLASSIFIED · LOCAL SAVES RETAINED ⚠</div>
+  <div class="workspace-grid">
+    <aside class="sidebar">
+      <div class="side-head"><span>Files</span><button class="add-file" id="add-file" title="Create file" aria-label="Create file">+</button></div>
+      <nav class="file-list" id="file-list" aria-label="Workspace files"></nav>
+      <div class="side-bottom"><div class="key-pill"><span class="status-dot"></span> DEVICE INSERTED</div><br>Workspace contents auto-saved to the CISSNA vault.<br><span id="file-count">9 files mounted</span></div>
+    </aside>
+    <main class="editor-column">
+      <div class="editor-top"><div class="file-title"><span id="file-symbol">▤</span><span id="file-name">README.md</span></div><div class="editor-actions"><span class="saved-dot"></span><span id="save-state">Vault synchronized</span></div></div>
+      <div class="editor-wrap"><div class="line-numbers" id="line-numbers" aria-hidden="true">1</div><textarea class="file-editor" id="file-editor" aria-label="File contents" spellcheck="false"></textarea></div>
+      <div class="editor-footer"><span id="file-type">MARKDOWN · UTF-8</span><span id="cursor-position">Ln 1, Col 1</span></div>
+    </main>
+    <aside class="terminal">
+      <div class="terminal-head"><div><div class="terminal-title"><span class="terminal-glyph">⌘</span> FIELD TERMINAL</div><div class="terminal-label">CHAT + DIRECT FILE EDITS</div></div><span class="terminal-state">SECURE SESSION</span></div>
+      <section class="terminal-radar" id="terminal-radar" aria-label="CISSNA radar monitor">
+        <div class="terminal-radar-head"><div><span>PERIMETER RADAR</span><small id="radar-state">MONITORING</small></div><button class="radar-test" id="radar-test" type="button">TEST REACTION</button></div>
+        <div class="radar-dish" aria-hidden="true"><i class="radar-range-ring inner"></i><i class="radar-range-ring mid"></i><i class="radar-range-ring outer-mid"></i><i class="radar-range-ring outer"></i><i class="radar-blip one" data-track="01"></i><i class="radar-blip two" data-track="02"></i><i class="radar-blip three" data-track="03"></i><i class="radar-blip four" data-track="04"></i><i class="radar-blip five" data-track="05"></i></div>
+        <div class="terminal-radar-foot"><span>LOCAL SENSOR GRID · RANGE 12.0</span><span id="radar-substate">STANDBY</span></div>
+      </section>
+      <div class="conversation" id="conversation" aria-live="polite">
+        <div class="msg"><div class="msg-who">C.I.P.H.E.R. · assistant</div><div class="bubble">Device detected. Your CISSNA files are mounted here. Edit a document directly or ask for a change in plain language. For every terminal code, type <code>engage</code> immediately before the code. Changes sync to the CISSNA vault as you go.</div></div>
+        <div class="quick-actions"><button data-prompt="engage">Engage controls</button><button data-prompt="help">Show terminal codes</button></div>
+      </div>
+      <form class="composer" id="terminal-form">
+        <p class="composer-hint">CHAT OR EDIT A FILE · TYPE / TO BROWSE CODES</p>
+        <div class="code-menu hidden" id="code-menu" role="listbox" aria-label="Available terminal codes"></div>
+        <div class="composer-row"><textarea class="prompt-input" id="prompt-input" rows="2" placeholder="Tell C.I.P.H.E.R. what to change…&#10;e.g. In briefing.md, change the location to Zurich."></textarea><button class="send-btn" type="submit" aria-label="Send request">↑</button></div>
+      </form>
+    </aside>
+  </div>
+  <footer class="workspace-status"><span><span class="ok" id="session-lamp">●</span> <span id="session-status">SECURE SESSION ACTIVE</span></span><span id="workspace-clock">CISSNA VAULT · AUTOSAVE ON</span></footer>
+</section>
+<div class="unlock-overlay hidden" id="unlock-modal" role="dialog" aria-modal="true" aria-labelledby="unlock-title">
+  <form class="unlock-card" id="unlock-form">
+    <div class="modal-kicker">CISSNA · AUTHORIZED RECOVERY</div>
+    <h2 id="unlock-title">Unlock workspace</h2>
+    <p>Enter the recovery password to restore the saved project files.</p>
+    <label for="unlock-password">Recovery password</label>
+    <input id="unlock-password" type="password" autocomplete="off" placeholder="ENTER PASSWORD">
+    <div class="unlock-error" id="unlock-error" role="status" aria-live="polite"></div>
+    <div class="modal-actions"><button class="text-button" type="button" id="cancel-unlock">Cancel</button><button class="primary-btn" type="submit">Unlock files</button></div>
+  </form>
+</div>
+<div class="unlock-overlay hidden" id="session-auth-modal" role="dialog" aria-modal="true" aria-labelledby="session-auth-title">
+  <form class="unlock-card" id="session-auth-form">
+    <div class="modal-kicker">CISSNA · SESSION AUTHORIZATION</div>
+    <h2 id="session-auth-title">Confirm secure session</h2>
+    <p>Enter the C.I.P.H.E.R. access code to continue to the private session.</p>
+    <label for="session-password">Access code</label>
+    <input id="session-password" type="password" autocomplete="off" placeholder="ENTER ACCESS CODE">
+    <div class="unlock-error" id="session-auth-error" role="status" aria-live="polite"></div>
+    <div class="modal-actions"><button class="text-button" type="button" id="cancel-session-auth">Cancel</button><button class="primary-btn" type="submit">Continue</button></div>
+  </form>
+</div>
+<div class="cyber-overlay hidden" id="cyber-modal" role="dialog" aria-modal="true" aria-labelledby="cyber-title">
+  <section class="cyber-window">
+    <header class="cyber-header"><div><div class="cyber-kicker" id="cyber-mode-label">CISSNA · DEMO</div><h2 id="cyber-title">OPERATIONS TERMINAL</h2></div><button class="cyber-close" id="close-cyber" type="button">Close ×</button></header>
+    <div class="cyber-subhead"><span><i></i> <span id="cyber-console-label">LOCAL DEMO CONSOLE · SAMPLE NODE</span></span><span>NO EXTERNAL TARGET</span></div>
+    <div class="cyber-screen" id="cyber-screen">
+      <div class="cyber-log" id="cyber-log" aria-live="polite"></div>
+      <div class="cyber-command-area">
+        <form class="cyber-command-form" id="cyber-command-form">
+          <label for="cyber-command-input">operator@cissna:~$</label>
+          <input id="cyber-command-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Cybermode terminal command">
+          <button type="submit">ENTER</button>
+        </form>
+      </div>
+    </div>
+    <footer class="cyber-footer"><span id="cyber-footer-label">DEMO · LOCAL NODE AND SAMPLE FILES ONLY</span><span>ESC TO CLOSE</span></footer>
+  </section>
+  <div class="cyber-command-menu hidden" id="cyber-command-menu" role="listbox" aria-label="Cybermode terminal commands"></div>
+</div>
+<div class="transfer-overlay hidden" id="transfer-modal" role="dialog" aria-modal="true" aria-labelledby="transfer-title">
+  <section class="transfer-window">
+    <header class="transfer-header"><div><div class="transfer-kicker">C.I.P.H.E.R. · SECURE HANDOFF</div><h2 id="transfer-title">DOCUMENT TRANSFER</h2></div><button class="transfer-close" id="close-transfer" type="button">Close ×</button></header>
+    <div class="transfer-route"><span id="transfer-source">LOCAL CISSNA VAULT</span><b>→</b><span class="route-target">/main-servers</span></div>
+    <div class="transfer-summary"><span id="transfer-state">Preparing file manifest…</span><strong id="transfer-percent">0%</strong></div>
+    <div class="transfer-track"><span id="transfer-progress"></span></div>
+    <div class="transfer-files" id="transfer-files"></div>
+    <footer class="transfer-footer"><span id="transfer-count">0 / 0 FILES</span><span id="transfer-footer-label">CONFIDENTIAL ROUTE · /main-servers</span></footer>
+  </section>
+</div>
+<div class="connection-overlay hidden" id="connection-sequence" role="dialog" aria-modal="true" aria-labelledby="connection-title">
+  <section class="connection-stage" id="radar-stage">
+    <header class="sequence-header"><div><div class="sequence-kicker">CISSNA · WIRELESS DATATRANSFERPAD</div><h2 id="connection-title">ACQUIRING C.I.P.H.E.R. KEY</h2></div><span class="sequence-live"><i></i> LINK ACTIVE</span></header>
+    <div class="radar-layout">
+      <div class="radar-wrap" aria-hidden="true"><div class="radar-grid"></div><div class="radar-sweep"></div><div class="radar-crosshair"></div><div class="radar-ping ping-one"></div><div class="radar-ping ping-two"></div><div class="radar-center">C</div></div>
+      <div class="radar-data"><div class="radar-readout"><span>PAD CHANNEL</span><b>WTDP-07</b></div><div class="radar-readout"><span>ENCRYPTED BAND</span><b>CH 04 / 8.6 GHZ</b></div><div class="radar-readout"><span>KEY RESPONSE</span><b id="radar-status">SCANNING RANGE</b></div><div class="radar-wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+    </div>
+    <footer class="sequence-footer"><span id="radar-footer">SEARCHING FOR AUTHORIZED C.I.P.H.E.R. SIGNAL</span><button class="sequence-cancel" id="cancel-connect" type="button">CANCEL</button></footer>
+  </section>
+  <section class="sequence-terminal hidden" id="sequence-terminal" aria-label="Connection terminal output"><header><span>DATATRANSFERPAD · SESSION LOG</span><span>CHANNEL 04 <i></i></span></header><div class="sequence-terminal-body" id="sequence-terminal-body"></div><div class="sequence-terminal-caret">█</div></section>
+  <section class="sequence-loading hidden" id="sequence-loading" aria-label="Loading private workspace"><div class="loading-kicker">C.I.P.H.E.R. · PRIVATE SESSION</div><img src="__CIPHER_LOGO__" alt="CISSNA hooded C emblem"><div class="loading-state" id="loading-state">ESTABLISHING PRIVATE SESSION</div><div class="loading-track"><span></span></div><div class="loading-coordinates">CISSNA OPERATIONS · ACCESS ROUTE 07</div></section>
+</div>
+<div class="unlock-overlay hidden" id="file-dialog" role="dialog" aria-modal="true" aria-labelledby="file-dialog-title">
+  <form class="unlock-card" id="file-dialog-form">
+    <div class="modal-kicker">CISSNA · WORKSPACE FILES</div>
+    <h2 id="file-dialog-title">File</h2>
+    <p id="file-dialog-message"></p>
+    <label for="file-dialog-input" id="file-dialog-label">File name</label>
+    <input id="file-dialog-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <div class="unlock-error" id="file-dialog-error" role="status" aria-live="polite"></div>
+    <div class="modal-actions"><button class="text-button" type="button" id="file-dialog-cancel">Cancel</button><button class="primary-btn" type="submit" id="file-dialog-ok">OK</button></div>
+  </form>
+</div>
