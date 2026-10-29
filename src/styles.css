@@ -104,3 +104,11 @@
     letter-spacing: 0.08em;
   }
 }
+
+@layer base {
+  body {
+    margin: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
