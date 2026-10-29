@@ -78,7 +78,7 @@
 .prop-disclosure {
   position: fixed;
   z-index: 2147483647;
-  top: max(6px, env(safe-area-inset-top));
+  top: calc(4px + env(safe-area-inset-top));
   left: 50%;
   transform: translateX(-50%);
   max-width: calc(100vw - 16px);
