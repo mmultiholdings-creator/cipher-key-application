@@ -12,6 +12,6 @@
 ## Project rules
 - The C.I.P.H.E.R. page is a near-verbatim port of the user's standalone HTML: markup in `src/cipher/cipher-markup.html` (loaded `?raw`), behavior in `src/cipher/engine.ts` (imperative DOM script started once from the `/` route), styles in `src/cipher/cipher.css`. Why: keeps the original look and interactions exact; React must not re-render that markup.
 - `src/styles.css` loads Tailwind theme + utilities without preflight. Why: a global reset would alter the original page's styling.
-- The prop notice lives in the root shell with the maximum z-index, and native prompt/confirm boxes are replaced by in-page dialogs. Why: the notice must stay visible over every dialog and loading screen.
-- Everything runs in the browser (localStorage only); no device APIs, network calls or backend. Why: it is a fictional prop.
+- Native prompt/confirm boxes are replaced by in-page dialogs in the page's own style. Why: browser boxes break the immersive look.
+- Everything runs in the browser (localStorage only); no device APIs, network calls or backend. Why: it is a personal toy; nothing should touch real devices or systems.
 - `/` is prerendered to static HTML (vite.config.ts). Why: identical for every visitor.

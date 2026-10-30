@@ -17,12 +17,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "C.I.P.H.E.R. secure workspace — a fictional interactive prop with a field terminal, editable files and perimeter radar.",
+          "C.I.P.H.E.R. secure workspace — field terminal, encrypted files and perimeter radar for CISSNA operations.",
       },
       { property: "og:title", content: "C.I.P.H.E.R. — Secure Workspace" },
       {
         property: "og:description",
-        content: "A fictional interactive prop. No real cyber operations.",
+        content: "Insert your C.I.P.H.E.R. Key to open the CISSNA private workspace.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
