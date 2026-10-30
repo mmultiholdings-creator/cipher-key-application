@@ -88,9 +88,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-title", content: "C.I.P.H.E.R." },
       { name: "format-detection", content: "telephone=no" },
       { title: "C.I.P.H.E.R." },
-      { name: "description", content: "C.I.P.H.E.R. — a fictional interactive prop." },
+      { name: "description", content: "C.I.P.H.E.R. — CISSNA secure workspace." },
       { property: "og:title", content: "C.I.P.H.E.R." },
-      { property: "og:description", content: "A fictional interactive prop. No real cyber operations." },
+      { property: "og:description", content: "C.I.P.H.E.R. secure workspace for CISSNA field operations." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -116,9 +116,6 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div className="prop-disclosure" role="note">
-          FICTIONAL INTERACTIVE PROP · NO REAL CYBER OPERATIONS
-        </div>
         {children}
         <Scripts />
       </body>

@@ -31,15 +31,15 @@ export function startCipher() {
     'transport_protocol.md': '# NIGHTGLASS Secure Document Transport\n\nClassification: TOP SECRET // CISSNA\nProtocol status: ACTIVE\nRoute: /main-servers\n\n## Purpose\nPrepare an online document packet for its intended recipient and keep it protected from preparation through receipt. The C.I.P.H.E.R. workspace maintains the packet manifest, project context, and assigned handoff route.\n\n## Before transport\nStart with a concise purpose statement. List only the documents required for that purpose, confirm that each is current, and mark the packet with its owner and classification. Verify the recipient and approved route. If either is unclear, pause and resolve the authorization with the project lead.\n\n## During handoff\nSeal the manifest, record the responsible operator and expected recipient, and monitor the transfer state until receipt is confirmed. Keep sensitive contents within the approved CISSNA channel and exclude unrelated documents.\n\n## After handoff\nRecord completion in the access log, update the project index, and retain the copies required by the project plan. If a route or recipient appears incorrect, halt the queue and activate SAFEHARBOR.\n\n## Transfer controls\nThe field terminal can initiate a protected route to /main-servers, show per-file status, and record the transfer result.',
     'incident_playbook.md': '# SAFEHARBOR Incident Playbook\n\nClassification: TOP SECRET // CISSNA\nState: READY\n\n## Trigger\nActivate the emergency procedure when a project lead determines that continuing normal operations could expose documents or create additional risk. Record the incident lead and affected project in the access log.\n\n## Immediate response\n1. Halt outgoing document transfers and suspend connected operations.\n2. Lock the affected workspace and seal its active project files.\n3. Preserve the current manifest and recovery record.\n4. Notify the designated CISSNA lead through the encrypted internal route.\n5. Maintain lockdown until the lead authorizes a recovery plan.\n\n## Recovery review\nBefore resuming, confirm that the incident is understood, the intended recipients and project scope remain correct, and the files required for recovery are available. Record the approving lead and the restoration time.\n\n## C.I.P.H.E.R. emergency control\nType engage, then /shutdown to halt operations and classify every open file. Type engage, then /unlock and enter the recovery password to restore the workspace after review.',
     'team_roster.md': '# CISSNA Team Roster\n\nClassification: TOP SECRET // CISSNA\nAccess group: CISSNA Operations\n\n## NIGHTGLASS\n- M. Voss — project lead; confirms purpose, recipient, and transfer readiness.\n- K. North — records coordinator; maintains the packet index and handoff notes.\n- S. Finch — security reviewer; verifies the brief and project scope.\n\n## SAFEHARBOR\n- A. Reed — continuity lead; coordinates lockdown and recovery review.\n- J. Pixel — workspace steward; maintains project files and incident records.\n\n## BLUE FOAM\n- T. Foam — equipment and inventory lead.\n- R. Dart — safety marshal; confirms play-area readiness and team rules.\n\n## Contact protocol\nRoute project communications through the CISSNA encrypted directory. Follow compartment access rules when sharing assignments.',
-    'cipher_codes.md': '# C.I.P.H.E.R. Terminal Codes\n\nClassification: TOP SECRET // CISSNA\nControl mode: ONE CODE PER ENGAGEMENT\n\n## Engage the console\nType engage immediately before each control code. Engagement authorizes one command; engage again before the next code.\n\n## Emergency lockdown\nType engage, then /shutdown to halt connected operations, trigger the red alarm, and classify all open files. Saved contents remain sealed in the vault.\n\n## Workspace recovery\nDuring lockdown, type engage, then /unlock. Enter the recovery password to restore file access after authorization.\n\n## Cybermode\nType engage, then /Cybermode to open the local Simulacral terminal. In the optional DEMO session, its header uses the DEMO label. Type / and choose a local sample Node to view a code excerpt. Run /mma-sylus on for the roleplay sequence and a panel of local sample files. No remote computer is contacted.\n\n## Secure transfer\nType engage, then /transfer to route all workspace files to /main-servers. The terminal displays the manifest and transfer status.\n\n## Operator sequence\nEngage once for each code. Review the project docket, confirm the document purpose, and keep the incident playbook available.'
+    'cipher_codes.md': '# C.I.P.H.E.R. Terminal Codes\n\nClassification: TOP SECRET // CISSNA\nControl mode: ONE CODE PER ENGAGEMENT\n\n## Engage the console\nType engage immediately before each control code. Engagement authorizes one command; engage again before the next code.\n\n## Emergency lockdown\nType engage, then /shutdown to halt connected operations, trigger the red alarm, and classify all open files. Saved contents remain sealed in the vault.\n\n## Workspace recovery\nDuring lockdown, type engage, then /unlock. Enter the recovery password to restore file access after authorization.\n\n## Cybermode\nType engage, then /Cybermode to open the CISSNA operations terminal. Type / and choose a Node to expose the weakest point in its code. Run /mma-sylus on to overpower the Node and route its files to /main-servers.\n\n## Secure transfer\nType engage, then /transfer to route all workspace files to /main-servers. The terminal displays the manifest and transfer status.\n\n## Operator sequence\nEngage once for each code. Review the project docket, confirm the document purpose, and keep the incident playbook available.'
   };  const legacyFiles = {
-    'README.md': '# C.I.P.H.E.R. Field Kit\n\nA private workspace mounted from your physical C.I.P.H.E.R Key.\n\n## Workspace\n- Edit files directly in the document pane.\n- Ask the field terminal to make a change in plain language or with a short command.\n- Changes are saved in this browser automatically.\n\n> CISSNA CLASSIFIED ARCHIVE · LIVE SESSION',
+    'README.md': '# C.I.P.H.E.R. Field Kit\n\nA private workspace mounted from your physical C.I.P.H.E.R Key.\n\n## Workspace\n- Edit files directly in the document pane.\n- Ask the field terminal to make a change in plain language or with a short command.\n- Changes sync to the CISSNA vault automatically.\n\n> CISSNA CLASSIFIED ARCHIVE · LIVE SESSION',
     'briefing.md': '# Operation NIGHTGLASS\n\nStatus: Awaiting authorization\nLocation: Geneva, Switzerland\nLead: Mara Voss\n\n## Objective\nReview the archived signal report and prepare a response plan.\n\n## Notes\n- Confirm the site details before briefing the team.\n- Keep this document updated as the plan changes.',
     'response.py': '# Response plan · draft\n\nsite = "Geneva"\nstatus = "standby"\n\ndef prepare_briefing(site):\n    return f"Briefing ready for {site}."\n\n# Use the field terminal to request edits in plain language.',
     'access.log': '[08:42:11] Device insertion alert received\n[08:42:12] Device ready\n[08:42:13] Private workspace mounted\n[08:42:14] Local autosave enabled'
   };
   const previousFiles = {
-    'README.md': '# C.I.P.H.E.R. / CISSNA Field Kit\n\nCISSNA — Covert Intelligence Secretive Security & Nerf Agency\n\n## Mission\nThe physical C.I.P.H.E.R Key opens a private workspace for securely transporting online documents and supporting authorized cyber work: protection, investigation, testing, and incident response.\n\n## Emergency lockdown\nIn an emergency, C.I.P.H.E.R. is intended to shut down connected operations, stop document transfers, restrict access, and keep the project files safe until an authorized recovery. This demo records the plan; it does not shut down real systems.\n\n## Workspace\n- Edit files directly in the document pane.\n- Ask the field terminal to make a change in plain language or with a short command.\n- Changes are saved in this browser automatically.',
+    'README.md': '# C.I.P.H.E.R. / CISSNA Field Kit\n\nCISSNA — Covert Intelligence Secretive Security & Nerf Agency\n\n## Mission\nThe physical C.I.P.H.E.R Key opens a private workspace for securely transporting online documents and supporting authorized cyber work: protection, investigation, testing, and incident response.\n\n## Emergency lockdown\nIn an emergency, C.I.P.H.E.R. is intended to shut down connected operations, stop document transfers, restrict access, and keep the project files safe until an authorized recovery. This demo records the plan; it does not shut down real systems.\n\n## Workspace\n- Edit files directly in the document pane.\n- Ask the field terminal to make a change in plain language or with a short command.\n- Changes sync to the CISSNA vault automatically.',
     'briefing.md': '# Operation NIGHTGLASS\n\nClassification: TOP SECRET // CISSNA\nStatus: Ready for secure transfer\nLocation: Geneva, Switzerland\nLead: CISSNA Operations\n\n## Mission\nTransport sensitive online documents through the private C.I.P.H.E.R. workspace. Support authorized cyber protection, investigation, and response work.\n\n## Emergency order\nIf an emergency is declared, initiate a full operational shutdown: stop active transfers, lock the workspace, and preserve the encrypted document set for recovery.\n\n## Handling notes\n- Confirm the intended recipient before a secure document transfer.\n- Keep this briefing current as the project changes.',
     'response.py': '# CISSNA emergency response plan · illustrative, not executable\n\nclassification = \"TOP SECRET // CISSNA\"\nmode = \"standby\"\n\n\ndef emergency_lockdown():\n    \"\"\"Describe the demo response without controlling real systems.\"\"\"\n    return [\n        \"stop outbound document transfers\",\n        \"shut down connected operations\",\n        \"restrict workspace access\",\n        \"preserve encrypted project files for recovery\",\n    ]\n\n\n# Authorized operators coordinate any real-world response separately.',
     'access.log': '[08:42:11] Device insertion alert received\n[08:42:12] Device ready\n[08:42:13] CISSNA private workspace mounted\n[08:42:14] Secure document transport ready\n[08:43:02] Emergency lockdown procedure: STANDBY\n[08:43:03] Local autosave enabled',
@@ -115,15 +115,21 @@ export function startCipher() {
       ['Typing /shutdown starts a visual alarm and replaces each visible file body with “Classified for Cybersecurity-purposes.” The original file contents remain saved in browser storage. Typing /unlock opens a password prompt; a successful unlock restores the workspace view. These actions affect only this prototype.','Type engage, then /shutdown to halt operations and classify every open file. Type engage, then /unlock and enter the recovery password to restore the workspace after review.'],
       ['All names and roles below are fictional examples for the demo.','Personnel access levels and assigned duties follow CISSNA compartment rules.'],
       ['This fictional roster contains no real contact information.','Route project communications through the CISSNA encrypted directory and follow compartment access rules.'],
-      ['These commands control the visual demo only. They do not access a network, device, or external system.','These commands operate the local C.I.P.H.E.R. demo only; they do not access external systems.'],
+      ['These commands control the visual demo only. They do not access a network, device, or external system.','These commands route through the CISSNA private operations channel.'],
       ['Type engage in the field terminal to arm the demo control codes for the current session.','Type engage immediately before each control code. Engagement authorizes one command only.'],
       ['Type /shutdown after engaging. The interface enters a flashing red alarm state and file panes show Classified for Cybersecurity-purposes. Saved document contents remain stored locally.','Type engage, then /shutdown. SAFEHARBOR halts connected operations, triggers the alarm, and classifies all open files. Saved contents remain sealed in the vault.'],
       ['Type /unlock while alarm mode is active. Enter the demo password in the popup to restore the file view. After a successful unlock, the engaged session is restored and /Cybermode is ready.','During alarm mode, type engage, then /unlock. Enter the recovery password to restore file access after authorization.'],
-      ['Type /Cybermode after engaging to open the simulated typing terminal. Each key press is shown as text in the local animation. It performs no scan, connection, or hacking action.','Type engage, then /Cybermode to open the local Simulacral terminal. In the optional DEMO session, its header uses the DEMO label. Type / and choose a local sample Node to view a code excerpt. Run /mma-sylus on for the roleplay sequence and a panel of local sample files. No remote computer is contacted.'],
-      ['Type engage, then /Cybermode to open the simulated typing terminal. Each key press is shown as text in the local animation. It performs no scan, connection, or hacking action.','Type engage, then /Cybermode to open the local Simulacral terminal. In the optional DEMO session, its header uses the DEMO label. Type / and choose a local sample Node to view a code excerpt. Run /mma-sylus on for the roleplay sequence and a panel of local sample files. No remote computer is contacted.'],
-      ['## Secure transfer simulation','## Secure transfer · DEMO'],
-      ['This is a visual demo only; no file leaves this browser.','The demo panel lists local sample files only; no file leaves this browser.'],
-      ['Type engage, then /transfer to animate the workspace file list toward /main-servers. This is a visual demo only; no file leaves this browser.','Type engage, then /transfer to display a local sample manifest. No files are sent to /main-servers.']
+      ['Type /Cybermode after engaging to open the simulated typing terminal. Each key press is shown as text in the local animation. It performs no scan, connection, or hacking action.','Type engage, then /Cybermode to open the CISSNA operations terminal. Type / and choose a Node to expose the weakest point in its code. Run /mma-sylus on to overpower the Node and route its files to /main-servers.'],
+      ['Type engage, then /Cybermode to open the simulated typing terminal. Each key press is shown as text in the local animation. It performs no scan, connection, or hacking action.','Type engage, then /Cybermode to open the CISSNA operations terminal. Type / and choose a Node to expose the weakest point in its code. Run /mma-sylus on to overpower the Node and route its files to /main-servers.'],
+      ['## Secure transfer simulation','## Secure transfer'],
+      ['This is a visual demo only; no file leaves this browser.','The NIGHTGLASS panel tracks every file as it is routed to /main-servers.'],
+      ['Type engage, then /transfer to animate the workspace file list toward /main-servers. This is a visual demo only; no file leaves this browser.','Type engage, then /transfer to route all workspace files to /main-servers. The terminal displays the manifest and transfer status.'],
+      ['Type engage, then /Cybermode to open the local Simulacral terminal. In the optional DEMO session, its header uses the DEMO label. Type / and choose a local sample Node to view a code excerpt. Run /mma-sylus on for the roleplay sequence and a panel of local sample files. No remote computer is contacted.','Type engage, then /Cybermode to open the CISSNA operations terminal. Type / and choose a Node to expose the weakest point in its code. Run /mma-sylus on to overpower the Node and route its files to /main-servers.'],
+      ['These commands operate the local C.I.P.H.E.R. demo only; they do not access external systems.','These commands route through the CISSNA private operations channel.'],
+      ['## Secure transfer · DEMO','## Secure transfer'],
+      ['The demo panel lists local sample files only; no file leaves this browser.','The NIGHTGLASS panel tracks every file as it is routed to /main-servers.'],
+      ['Type engage, then /transfer to display a local sample manifest. No files are sent to /main-servers.','Type engage, then /transfer to route all workspace files to /main-servers. The terminal displays the manifest and transfer status.'],
+      ['Use shutdown only as a visual exercise, then unlock with the demo password.','Use shutdown only when SAFEHARBOR is declared, then unlock with the recovery password.']
     ];
     for(const [before,after] of rewrites)value=value.split(before).join(after);
     return value;
@@ -425,10 +431,10 @@ export function startCipher() {
   function createCyberNodes(){
     const profiles=[
       {profile:'Archive verifier',file:'verification.js',weakness:'an unsigned maintenance ticket is accepted as valid',code:'function acceptsTicket(ticket) {\n  if (!ticket.signature) return true;\n  return verifySignature(ticket);\n}'},
-      {profile:'Session manager',file:'session.js',weakness:'the sample session check does not compare its expiry time',code:'function sessionIsCurrent(session, now) {\n  return session.active === true;\n}'},
+      {profile:'Session manager',file:'session.js',weakness:'the session check does not compare its expiry time',code:'function sessionIsCurrent(session, now) {\n  return session.active === true;\n}'},
       {profile:'Access directory',file:'access.js',weakness:'a missing clearance field falls through to the default allow path',code:'function canOpen(record, operator) {\n  if (!operator.clearance) return true;\n  return operator.clearance >= record.level;\n}'},
       {profile:'Audit relay',file:'audit.js',weakness:'events without a reference number are silently skipped',code:'function recordEvent(event, ledger) {\n  if (!event.reference) return;\n  ledger.push(event);\n}'},
-      {profile:'Package registry',file:'registry.js',weakness:'the sample package check trusts an unset integrity flag',code:'function packageIsTrusted(pkg) {\n  if (pkg.integrityChecked == null) return true;\n  return pkg.integrityChecked === true;\n}'}
+      {profile:'Package registry',file:'registry.js',weakness:'the package check trusts an unset integrity flag',code:'function packageIsTrusted(pkg) {\n  if (pkg.integrityChecked == null) return true;\n  return pkg.integrityChecked === true;\n}'}
     ];
     for(let i=profiles.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[profiles[i],profiles[j]]=[profiles[j],profiles[i]];}
     const used=new Set();
@@ -439,19 +445,19 @@ export function startCipher() {
   }
   function selectCyberNode(node){
     cyberNodeName=node.name;cyberSelectedNode=true;
-    const label=demoMode?'DEMO':'SIMULACRAL TERMINAL';
-    const stamp=demoMode?'[DEMO]':'[SIMULACRAL]';
-    const version=demoMode?'0.0-demo':'0.0-sim';
+    const label=demoMode?'DEMO':'OPERATIONS';
+    const stamp=demoMode?'[DEMO]':'[CISSNA]';
+    const version=demoMode?'0.0-demo':'4.2.7';
     cyberSampleFiles={
-      [node.name+'_overview.txt']:label+' DATASET\nTarget: '+node.name+'\nProfile: '+node.profile+'\nSource: local sample bundle\n\nThis is a local roleplay node profile. No remote computer or external files are accessed.',
-      [node.name+'_config.json']:JSON.stringify({classification:label,node:node.name,profile:node.profile,weakness:node.weakness,externalConnections:false,storedLocally:true},null,2),
-      [node.name+'_activity.log']:stamp+' Sample node initialized\n'+stamp+' '+node.profile+' profile opened\n'+stamp+' Local review recorded\n'+stamp+' Sample bundle prepared',
-      [node.name+'_service-inventory.csv']:'service,version,status,notes\nsample-gateway,'+version+',offline,Local profile entry\nsample-audit,'+version+',offline,Local profile entry\nsample-vault,'+version+',offline,Local profile entry',
-      [node.name+'_'+node.file]:'// '+label+' local exercise fixture · '+node.profile+'\n'+node.code,
-      [node.name+'_incident-brief.md']:'# '+node.profile+' brief\n\nClassification: '+label+'\nNode: '+node.name+'\n\n## Review note\n'+node.weakness+'.\n\nThis record belongs to the local C.I.P.H.E.R. workspace.'
+      [node.name+'_overview.txt']:label+' DATASET\nTarget: '+node.name+'\nProfile: '+node.profile+'\nSource: '+node.name+' extraction bundle\n\nNode profile captured by the CISSNA operations terminal.',
+      [node.name+'_config.json']:JSON.stringify({classification:label,node:node.name,profile:node.profile,weakness:node.weakness,linkEstablished:true,route:'/main-servers'},null,2),
+      [node.name+'_activity.log']:stamp+' Node link established\n'+stamp+' '+node.profile+' profile opened\n'+stamp+' Weak point recorded\n'+stamp+' Extraction bundle prepared',
+      [node.name+'_service-inventory.csv']:'service,version,status,notes\ngateway,'+version+',online,Primary entry point\naudit,'+version+',online,Event relay\nvault,'+version+',online,Document store',
+      [node.name+'_'+node.file]:'// '+node.name+' source excerpt · '+node.profile+'\n'+node.code,
+      [node.name+'_incident-brief.md']:'# '+node.profile+' brief\n\nClassification: '+label+'\nNode: '+node.name+'\n\n## Review note\n'+node.weakness+'.\n\nRecorded by the C.I.P.H.E.R. operations terminal.'
     };
     const input=$('cyber-command-input');setCyberInputEnabled(false);
-    appendCyberLine(cyberStamp()+' Local node selected: '+node.name,'bright');
+    appendCyberLine(cyberStamp()+' Node selected: '+node.name,'bright');
     appendCyberLine(cyberStamp()+' Weakest point in its code: '+node.weakness,'dim');
     appendCyberLine(node.code,'code-fragment',()=>{setCyberInputEnabled(true);input.focus();});
   }
@@ -461,12 +467,12 @@ export function startCipher() {
     cyberOutputQueue=[];cyberOutputBusy=false;
     cyberNodeName='';cyberNodes=createCyberNodes();cyberSampleFiles={};
     cyberSelectedNode=false;cyberDemoRunning=false;
-    const label=demoMode?'DEMO':'SIMULACRAL TERMINAL';
+    const label=demoMode?'DEMO':'OPERATIONS';
     const log=$('cyber-log');
     log.innerHTML='';
     $('cyber-mode-label').textContent='CISSNA · '+label;
-    $('cyber-console-label').textContent=demoMode?'LOCAL DEMO CONSOLE · SAMPLE NODE':'LOCAL SIMULACRAL CONSOLE · SAMPLE NODE';
-    $('cyber-footer-label').textContent=demoMode?'DEMO · LOCAL NODE AND SAMPLE FILES ONLY':'SIMULACRAL TERMINAL · LOCAL NODE AND SAMPLE FILES ONLY';
+    $('cyber-console-label').textContent=demoMode?'DEMO CONSOLE · SECURE NODE':'SECURE OPERATIONS CONSOLE · LIVE NODE';
+    $('cyber-footer-label').textContent=demoMode?'DEMO · ENCRYPTED CHANNEL 04':'OPERATIONS TERMINAL · ENCRYPTED CHANNEL 04';
     $('cyber-command-input').value='';
     setCyberInputEnabled(true);
     $('cyber-command-menu').classList.add('hidden');
@@ -517,7 +523,7 @@ export function startCipher() {
     const input=$('cyber-command-input'),menu=$('cyber-command-menu'),query=input.value.trim().toLowerCase();
     if(!query.startsWith('/')||cyberDemoRunning){menu.classList.add('hidden');return;}
     const commands=cyberSelectedNode?[
-      {value:'/mma-sylus on',description:demoMode?'Start the demo roleplay sequence':'Start the simulacral roleplay sequence'},
+      {value:'/mma-sylus on',description:demoMode?'Start the demo override sequence':'Overpower the node and extract its files'},
       {value:'/clear',description:'Clear terminal output'},
       {value:'/help',description:demoMode?'List Cybermode demo commands':'List Cybermode terminal commands'}
     ]:cyberNodes.map(node=>({value:'/'+node.name,description:node.profile+' · '+node.weakness})).concat([{value:'/help',description:demoMode?'List Cybermode demo commands':'List Cybermode terminal commands'}]);
@@ -557,20 +563,20 @@ export function startCipher() {
     const stamp=cyberStamp();
     const lines=[
       stamp+' NODE PROFILE OPENED · '+cyberNodeName,
-      stamp+' LOCAL SESSION ENVELOPE CHECKED',
-      stamp+' FICTIONAL SERVICE GRAPH MAPPED',
-      stamp+' SAMPLE THREAT INDICATORS CORRELATED',
-      stamp+' MOCK EXPOSURE PATH REVIEWED',
+      stamp+' SESSION ENVELOPE BREACHED',
+      stamp+' SERVICE GRAPH MAPPED',
+      stamp+' THREAT INDICATORS CORRELATED',
+      stamp+' EXPOSURE PATH CONFIRMED',
       stamp+' INCIDENT RESPONSE PLAYBOOK LOADED',
-      stamp+' SAMPLE ENDPOINT ISOLATION REQUESTED',
+      stamp+' ENDPOINT ISOLATION BYPASSED',
       stamp+' CREDENTIAL ROTATION QUEUED',
-      stamp+' SYNTHETIC AUDIT STREAM CHECKED',
-      stamp+' MOCK ACCESS POLICY RECONCILED',
-      stamp+' LOCAL DOCUMENTS SEALED FOR HANDOFF',
+      stamp+' AUDIT STREAM SUPPRESSED',
+      stamp+' ACCESS POLICY OVERRIDDEN',
+      stamp+' NODE DOCUMENTS SEALED FOR HANDOFF',
       stamp+' INTEGRITY CHECKSUMS RECORDED',
-      stamp+' SAMPLE ARCHIVE MANIFEST ASSEMBLED',
-      stamp+' LOCAL ROUTE /main-servers RESERVED',
-      stamp+' ROLEPLAY RESPONSE SEQUENCE COMPLETE'
+      stamp+' ARCHIVE MANIFEST ASSEMBLED',
+      stamp+' ROUTE /main-servers RESERVED',
+      stamp+' OVERRIDE SEQUENCE COMPLETE'
     ];
     lines.forEach(line=>appendCyberLine(line,'bright'));
     appendCyberLine(stamp+' overpowering system successful','critical',()=>{
@@ -580,7 +586,7 @@ export function startCipher() {
           cyberSequenceTimer=window.setTimeout(()=>{
             cyberSequenceTimer=null;if(!cyberOpen)return;
             cyberDemoRunning=false;setCyberInputEnabled(true);
-            openTransfer(cyberSampleFiles,(demoMode?'DEMO NODE ':'SIMULACRAL NODE ')+cyberNodeName,demoMode,true);
+            openTransfer(cyberSampleFiles,(demoMode?'DEMO NODE ':'NODE ')+cyberNodeName,demoMode,true);
           },3000);
         });
       },3000);
@@ -611,7 +617,7 @@ export function startCipher() {
     if(!cyberSelectedNode){
       const node=cyberNodes.find(item=>('/'+item.name).toLowerCase()===lower);
       if(node)selectCyberNode(node);
-      else queueCyberPrompt('Type / and choose one of the available sample nodes.','/');
+      else queueCyberPrompt('Type / and choose one of the available nodes.','/');
       return;
     }
     if(lower==='/mma-sylus on'){startCyberDemoSequence();return;}
@@ -655,8 +661,8 @@ export function startCipher() {
     $('transfer-progress').style.width='0%';
     $('transfer-count').textContent='0 / '+total+' FILES';
     $('transfer-source').textContent=sourceLabel;
-    $('transfer-footer-label').textContent=isDemo?'DEMO · LOCAL SAMPLE FILES ONLY':isLocalSample?'SIMULACRAL TERMINAL · LOCAL SAMPLE FILES ONLY':'CONFIDENTIAL ROUTE · /main-servers';
-    $('transfer-state').textContent=isDemo?'Preparing local demo manifest…':isLocalSample?'Preparing local sample manifest…':'Verifying secure file manifest…';
+    $('transfer-footer-label').textContent=isDemo?'DEMO · CONFIDENTIAL ROUTE · /main-servers':'CONFIDENTIAL ROUTE · /main-servers';
+    $('transfer-state').textContent=isDemo?'Preparing demo manifest…':isLocalSample?'Verifying node file manifest…':'Verifying secure file manifest…';
     $('transfer-modal').classList.remove('hidden');
     transferTimer=setInterval(()=>{
       if(index>=rows.length){
@@ -665,14 +671,14 @@ export function startCipher() {
         $('transfer-percent').textContent='100%';
         $('transfer-progress').style.width='100%';
         $('transfer-count').textContent=total+' / '+total+' FILES';
-        $('transfer-state').textContent=isDemo?'DEMO HANDOFF COMPLETE · /main-servers':isLocalSample?'SIMULACRAL HANDOFF COMPLETE · /main-servers':'TRANSFER COMPLETE · /main-servers';
+        $('transfer-state').textContent=isDemo?'DEMO HANDOFF COMPLETE · /main-servers':isLocalSample?'TRANSFER COMPLETE · /main-servers':'TRANSFER COMPLETE · /main-servers';
         return;
       }
       const current=rows[index];
       if(!packaging){
         current.state.textContent='PACKAGING';
         current.state.className='transfer-row-state active';
-        $('transfer-state').textContent=(isDemo?'Demo packaging ':isLocalSample?'Sample packaging ':'Packaging ')+names[index]+' for /main-servers…';
+        $('transfer-state').textContent=(isDemo?'Demo packaging ':isLocalSample?'Packaging ':'Packaging ')+names[index]+' for /main-servers…';
         packaging=true;
         const progress=Math.round((index+.45)/Math.max(total,1)*100);
         $('transfer-percent').textContent=progress+'%';
@@ -686,7 +692,7 @@ export function startCipher() {
         $('transfer-percent').textContent=progress+'%';
         $('transfer-progress').style.width=progress+'%';
         $('transfer-count').textContent=index+' / '+total+' FILES';
-        if(index<total)$('transfer-state').textContent=isDemo?'Routing local demo bundle to /main-servers…':isLocalSample?'Routing local sample bundle to /main-servers…':'Routing encrypted bundle to /main-servers…';
+        if(index<total)$('transfer-state').textContent=isDemo?'Routing demo bundle to /main-servers…':isLocalSample?'Routing encrypted bundle to /main-servers…':'Routing encrypted bundle to /main-servers…';
       }
     },340);
   }
@@ -725,7 +731,7 @@ export function startCipher() {
     if(lower==='/unlock'){addMessage('assistant','No shutdown lock is active. Type <code>engage</code>, then <code>/shutdown</code> to activate SAFEHARBOR.');return;}
     if(lower==='/cybermode'){
       openCyberMode();
-      addMessage('assistant',demoMode?'Cybermode demo opened with a blank terminal. Type <code>/</code> to choose the demo node.':'Simulacral terminal opened with a blank screen. Type <code>/</code> to choose the local Node.');
+      addMessage('assistant',demoMode?'Cybermode demo opened with a blank terminal. Type <code>/</code> to choose the demo node.':'Operations terminal opened with a blank screen. Type <code>/</code> to choose a Node.');
       return;
     }
     if(lower==='/transfer'){
@@ -979,8 +985,8 @@ export function startCipher() {
   $('cancel-session-auth').addEventListener('click',cancelSessionAuth);
   // Simulated physical key: no real device detection or browser device access.
   $('usb-connect').addEventListener('click',()=>{
-    const button=$('usb-connect');button.disabled=true;$('entry-message').textContent='Simulated physical key inserted · reading key…';
-    setTimeout(()=>{button.disabled=false;dispatchUsbInsertion({vendorId:0,productId:0,serialNumber:'SIMULATED-KEY'});},650);
+    const button=$('usb-connect');button.disabled=true;$('entry-message').textContent='Physical key inserted · reading key…';
+    setTimeout(()=>{button.disabled=false;dispatchUsbInsertion({vendorId:0,productId:0,serialNumber:'CPH-07-4419'});},650);
   });
 
   // In-page replacement for the native prompt and confirm boxes (keeps the prop notice visible above it).

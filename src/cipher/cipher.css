@@ -85,9 +85,4 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 @supports (min-height:100dvh){#entry{min-height:100dvh}}
 #workspace{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
 .conversation,.cyber-screen,.transfer-files,.file-list,.file-editor,.sequence-terminal-body{-webkit-overflow-scrolling:touch}
-/* Reserve a strip at the top for the persistent prop notice so it never covers page controls. */
-:root{--prop-notice-space:calc(30px + env(safe-area-inset-top))}
-#entry{padding-top:var(--prop-notice-space)}
-#workspace{top:var(--prop-notice-space)}
-@media (max-width:460px){:root{--prop-notice-space:calc(44px + env(safe-area-inset-top))}}
 @media (hover:none){.file-actions{opacity:.85}.file-action{min-width:26px;height:30px}}
