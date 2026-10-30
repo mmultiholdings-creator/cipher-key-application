@@ -92,7 +92,7 @@ export function startCipher() {
       ['The demo alarm hides file contents behind a classification notice while keeping saved copies intact. It does not shut down real systems or services.','The SAFEHARBOR alarm halts active operations, classifies file contents, and preserves sealed copies for authorized recovery.'],
       ['This demo records the plan; it does not shut down real systems.','SAFEHARBOR executes the shutdown order, seals the document set, and holds the vault for authorized recovery.'],
       ['Project notes in this demo are fictional and stored in this browser.','Project notes are classified and sealed in the CISSNA vault.'],
-      ['Changes sync to the CISSNA vault automatically.','Changes are saved to the CISSNA vault automatically.'],
+      ['Changes are saved in this browser automatically.','Changes are saved to the CISSNA vault automatically.'],
       ['Changes save automatically in this browser.','Changes sync to the CISSNA vault automatically.'],
       ['This fictional demo does not transmit documents or contact a recipient.','The NIGHTGLASS channel routes the approved packet to its verified recipient.'],
       ['# CISSNA emergency response plan · illustrative, not executable','# CISSNA Emergency Response Controller'],
