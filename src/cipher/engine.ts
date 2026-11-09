@@ -900,7 +900,7 @@ export function startCipher() {
   }
   function clearConnectionTimers(){connectionSequenceToken++;for(const timer of connectionTimers)window.clearTimeout(timer);connectionTimers=[];return connectionSequenceToken;}
   function scheduleConnection(token,callback,delay){const timer=window.setTimeout(()=>{connectionTimers=connectionTimers.filter(item=>item!==timer);if(token===connectionSequenceToken)callback();},delay);connectionTimers.push(timer);}
-  function showConnectionStage(id){['radar-stage','sequence-terminal','sequence-loading'].forEach(stage=>$(stage).classList.toggle('hidden',stage!==id));$('connection-sequence').classList.remove('hidden');}
+  function showConnectionStage(id){['radar-stage','sequence-terminal','mmulti-gate','sequence-loading'].forEach(stage=>$(stage).classList.toggle('hidden',stage!==id));$('connection-sequence').classList.remove('hidden');}
   function cancelConnectionSequence(){clearConnectionTimers();$('connection-sequence').classList.add('hidden');$('entry-status').textContent=selectedUsbDevice?'Device detected':'Device not detected';$('entry-message').textContent='Connection request cancelled.';}
   function requestAccessPassword(source){
     clearConnectionTimers();$('connection-sequence').classList.add('hidden');pendingConnectionSource=source;
@@ -921,6 +921,31 @@ export function startCipher() {
     $('loading-state').textContent=source==='wireless'?'ESTABLISHING WIRELESS SESSION':source==='demo'?'LOADING DEMO SESSION':'ESTABLISHING PHYSICAL SESSION';
     scheduleConnection(token,()=>{$('connection-sequence').classList.add('hidden');mountWorkspace();},2200);
   }
+  let mmultiPending=null;
+  const MMULTI_USER='bLa2vB98P',MMULTI_PASS='RESTRICTED145';
+  function showMmultiGate(token,source){
+    mmultiPending={token,source};
+    $('mm-agree').checked=false;$('mm-continue').disabled=true;
+    $('mm-username').value='';$('mm-password').value='';$('mm-error').textContent='';
+    $('mm-notice').classList.remove('hidden');$('mm-login').classList.add('hidden');$('mm-granted').classList.add('hidden');
+    showConnectionStage('mmulti-gate');$('mmulti-gate').scrollTop=0;
+  }
+  $('mm-agree').addEventListener('change',()=>{$('mm-continue').disabled=!$('mm-agree').checked;});
+  $('mm-continue').addEventListener('click',()=>{
+    if(!$('mm-agree').checked)return;
+    $('mm-notice').classList.add('hidden');$('mm-login').classList.remove('hidden');$('mmulti-gate').scrollTop=0;$('mm-username').focus();
+  });
+  $('mm-login-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    if($('mm-username').value.trim()===MMULTI_USER&&$('mm-password').value===MMULTI_PASS){
+      $('mm-login').classList.add('hidden');$('mm-granted').classList.remove('hidden');$('mm-error').textContent='';$('mmulti-gate').scrollTop=0;
+    }else{$('mm-error').textContent='ACCESS DENIED — INVALID CREDENTIALS.';$('mm-password').value='';$('mm-password').focus();}
+  });
+  $('mm-enter').addEventListener('click',()=>{
+    if(!mmultiPending)return;
+    const {token,source}=mmultiPending;mmultiPending=null;
+    if(token===connectionSequenceToken)showLoadingStage(token,source);
+  });
   function startTerminalSequence(source){
     const token=clearConnectionTimers();showConnectionStage('sequence-terminal');
     const body=$('sequence-terminal-body');body.textContent=source==='wireless'?'[LINK] C.I.P.H.E.R. KEY SIGNAL DETECTED\n':source==='demo'?'[DEMO] DIRECT SESSION REQUESTED\n':'[DEVICE] PHYSICAL KEY DETECTED\n';
@@ -937,7 +962,7 @@ export function startCipher() {
     ];
     let lineIndex=0,charIndex=0;
     const typeNext=()=>{
-      if(lineIndex>=lines.length){scheduleConnection(token,()=>showLoadingStage(token,source),180);return;}
+      if(lineIndex>=lines.length){scheduleConnection(token,()=>showMmultiGate(token,source),180);return;}
       const line=lines[lineIndex];
       if(charIndex<line.length){body.textContent+=line[charIndex++];scheduleConnection(token,typeNext,7);}
       else{body.textContent+='\n';lineIndex++;charIndex=0;scheduleConnection(token,typeNext,42);}
