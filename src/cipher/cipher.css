@@ -117,3 +117,10 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 @keyframes mmBlink{0%,100%{opacity:1}50%{opacity:.2}}
 .mm-footer{border-top:1px solid #343a42;padding-top:18px;margin-top:18px;text-align:center;font-size:11px;color:#66717c;letter-spacing:1px}
 @media(max-width:520px){.mm-panel{padding:24px 20px}.mm-logo{font-size:26px;letter-spacing:5px}}
+
+/* Home: equal main buttons, demo underneath, blank USB key */
+.entry-actions{display:grid;grid-template-columns:1fr;gap:12px;max-width:440px;justify-items:stretch}
+.entry-actions .primary-btn,.entry-actions .usb-connect{width:100%;min-height:52px;padding:0 19px;font:700 10px var(--mono);letter-spacing:.13em;text-transform:uppercase;border-radius:2px;display:flex;align-items:center;justify-content:center;gap:8px;text-align:center}
+.entry-actions .usb-connect{border:1px solid rgba(157,185,205,.35);color:#c9d4d8;background:rgba(255,255,255,.02)}
+.entry-actions .demo-button{justify-self:center;margin-top:2px}
+.key-body:before,.key-body:after{content:none!important;background:none!important}
