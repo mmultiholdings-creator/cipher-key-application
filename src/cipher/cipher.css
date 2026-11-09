@@ -86,3 +86,34 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 #workspace{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
 .conversation,.cyber-screen,.transfer-files,.file-list,.file-editor,.sequence-terminal-body{-webkit-overflow-scrolling:touch}
 @media (hover:none){.file-actions{opacity:.85}.file-action{min-width:26px;height:30px}}
+
+/* MMulti restricted-access gate (between session log and loading screen) */
+.mmulti-gate{position:fixed;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;justify-content:center;align-items:flex-start;padding:max(20px,env(safe-area-inset-top)) 20px max(20px,env(safe-area-inset-bottom));background:#090b0e;color:#e8e8e8;font-family:Arial,sans-serif;font-size:15px;z-index:2}
+.mmulti-gate.hidden{display:none}
+.mmulti-gate *{box-sizing:border-box}
+.mm-panel{width:100%;max-width:540px;margin:auto;background:#11151a;border:1px solid #343a42;padding:35px;border-radius:8px;box-shadow:0 15px 60px #0009;text-align:left}
+.mm-top{text-align:center;border-bottom:1px solid #343a42;padding-bottom:22px;margin-bottom:25px}
+.mm-logo{font-size:32px;font-weight:bold;letter-spacing:7px}
+.mm-subtitle{color:#929ba5;font-size:12px;letter-spacing:3px;margin-top:8px}
+.mm-warning{color:#ff5555;border:1px solid #793333;background:#291414;padding:13px;text-align:center;font-weight:bold;font-size:13px;letter-spacing:2px;margin-bottom:25px}
+.mm-warning.mm-ok{color:#76d99b;border-color:#27613d;background:#102419}
+.mmulti-gate h2{font-size:22px;margin:0 0 15px;font-family:Arial,sans-serif;color:#e8e8e8;letter-spacing:0;text-transform:none}
+.mmulti-gate p{color:#b5bdc5;font-size:15px;line-height:1.7;margin:0 0 15px}
+.mm-rules{background:#191f26;padding:15px 20px;border-radius:5px;margin:20px 0}
+.mm-rules p{margin:9px 0;font-size:14px}.mm-rules span{color:#ff6666}
+.mm-ack{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:#cbd0d5;margin:22px 0;line-height:1.5;cursor:pointer}
+.mm-ack input{width:20px;height:20px;flex:none;margin:1px 0 0;accent-color:#a52c2c}
+.mm-btn{display:block;width:100%;padding:15px;background:#a52c2c;color:#fff;border:none;border-radius:4px;font:bold 14px Arial,sans-serif;letter-spacing:1px;cursor:pointer;transition:.2s;-webkit-appearance:none;appearance:none}
+.mm-btn:hover{background:#d13b3b}.mm-btn:disabled{opacity:.35;cursor:not-allowed;background:#a52c2c}
+.mmulti-gate input[type=text],.mmulti-gate input[type=password]{display:block;width:100%;background:#090d11;border:1px solid #414953;padding:15px;margin:8px 0 18px;color:#fff;border-radius:4px;outline:none;font-size:16px;font-family:Arial,sans-serif;-webkit-appearance:none;appearance:none}
+.mmulti-gate input:focus{border-color:#b63b3b}
+.mm-field{font-size:13px;color:#aeb7c0;letter-spacing:1px}
+.mm-error{color:#ff6464;font-size:14px;margin:15px 0;text-align:center;min-height:1px}
+.mm-success{color:#76d99b !important;text-align:center}
+.mm-center{text-align:center}.mmulti-gate p.mm-small{font-size:12px;margin-top:15px}
+.mm-monitoring{border-top:1px solid #343a42;margin-top:22px;padding-top:16px;text-align:center;color:#aeb7c0;font-size:11px;letter-spacing:1.5px}
+.mm-dot{display:inline-block;width:8px;height:8px;background:#39e875;border-radius:50%;margin-right:7px;animation:mmBlink 1.2s infinite;box-shadow:0 0 8px #39e875}
+.mm-divider{color:#515b65;margin:0 6px}
+@keyframes mmBlink{0%,100%{opacity:1}50%{opacity:.2}}
+.mm-footer{border-top:1px solid #343a42;padding-top:18px;margin-top:18px;text-align:center;font-size:11px;color:#66717c;letter-spacing:1px}
+@media(max-width:520px){.mm-panel{padding:24px 20px}.mm-logo{font-size:26px;letter-spacing:5px}}

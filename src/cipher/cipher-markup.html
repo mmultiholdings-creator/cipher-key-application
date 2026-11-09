@@ -118,6 +118,49 @@
     <footer class="sequence-footer"><span id="radar-footer">SEARCHING FOR AUTHORIZED C.I.P.H.E.R. SIGNAL</span><button class="sequence-cancel" id="cancel-connect" type="button">CANCEL</button></footer>
   </section>
   <section class="sequence-terminal hidden" id="sequence-terminal" aria-label="Connection terminal output"><header><span>DATATRANSFERPAD · SESSION LOG</span><span>CHANNEL 04 <i></i></span></header><div class="sequence-terminal-body" id="sequence-terminal-body"></div><div class="sequence-terminal-caret">█</div></section>
+  <section class="mmulti-gate hidden" id="mmulti-gate" aria-label="MMulti restricted access">
+    <div class="mm-panel">
+      <div class="mm-top"><div class="mm-logo">MMULTI</div><div class="mm-subtitle">SECURE INTERNAL ENVIRONMENT</div></div>
+      <div id="mm-notice">
+        <div class="mm-warning">⚠ CLASSIFIED — RESTRICTED ACCESS</div>
+        <h2>Confidentiality Agreement</h2>
+        <p>You are accessing an internal MMulti environment. All information, documents, communications and materials available on this platform are strictly confidential.</p>
+        <div class="mm-rules">
+          <p><span>■</span> Screenshots and screen recordings are prohibited.</p>
+          <p><span>■</span> Photography and unauthorized copying are prohibited.</p>
+          <p><span>■</span> Sharing information with unauthorized persons is prohibited.</p>
+          <p><span>■</span> Internal documents must remain within authorized environments.</p>
+        </div>
+        <p>By continuing, you confirm that you understand and agree to comply with these confidentiality requirements. Unauthorized disclosure may result in access termination and further action under applicable rules.</p>
+        <p>This environment is monitored and secured 24/7 by <b>DISC (Department for International Surveillance of all C.I.P.H.E.R-keys)</b> and <b>GNEND (GhostNet Encrypted Network Department).</b></p>
+        <p><b>YOUR ACCESS IS A PRIVILEGE. YOUR DISCRETION IS AN OBLIGATION.</b></p>
+        <label class="mm-ack"><input type="checkbox" id="mm-agree"> I have read, understood and agree to the confidentiality requirements stated above.</label>
+        <button class="mm-btn" id="mm-continue" type="button" disabled>ACKNOWLEDGE &amp; CONTINUE →</button>
+      </div>
+      <div id="mm-login" class="hidden">
+        <div class="mm-warning">🔒 RESTRICTED AUTHENTICATION</div>
+        <h2>Personnel Authentication</h2>
+        <p>Confidentiality acknowledged. Please authenticate your identity to access the MMulti environment.</p>
+        <form id="mm-login-form" autocomplete="off">
+          <label class="mm-field" for="mm-username">USERNAME</label>
+          <input type="text" id="mm-username" placeholder="Enter authorized username" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+          <label class="mm-field" for="mm-password">PASSWORD</label>
+          <input type="password" id="mm-password" placeholder="Enter security password" required>
+          <div id="mm-error" class="mm-error" role="status" aria-live="polite"></div>
+          <button class="mm-btn" type="submit">AUTHENTICATE →</button>
+        </form>
+        <p class="mm-center mm-small">ACCESS IS LIMITED TO AUTHORIZED PERSONNEL.</p>
+      </div>
+      <div id="mm-granted" class="hidden">
+        <div class="mm-warning mm-ok">✓ AUTHENTICATION SUCCESSFUL</div>
+        <h2 class="mm-success">Access Granted</h2>
+        <p class="mm-center">Your identity has been authenticated. You may now proceed to the C.I.P.H.E.R-key's Terminal.</p>
+        <button class="mm-btn" id="mm-enter" type="button">ENTER THE C.I.P.H.E.R-KEY'S TERMINAL →</button>
+      </div>
+      <div class="mm-monitoring"><span class="mm-dot"></span>DISC &amp; GNEND<span class="mm-divider">|</span>SECURITY ACTIVE · 24/7</div>
+      <div class="mm-footer">MMULTI SECURITY DIVISION<br>CONFIDENTIAL • RESTRICTED • INTERNAL USE ONLY</div>
+    </div>
+  </section>
   <section class="sequence-loading hidden" id="sequence-loading" aria-label="Loading private workspace"><div class="loading-kicker">C.I.P.H.E.R. · PRIVATE SESSION</div><img src="__CIPHER_LOGO__" alt="CISSNA hooded C emblem"><div class="loading-state" id="loading-state">ESTABLISHING PRIVATE SESSION</div><div class="loading-track"><span></span></div><div class="loading-coordinates">CISSNA OPERATIONS · ACCESS ROUTE 07</div></section>
 </div>
 <div class="unlock-overlay hidden" id="file-dialog" role="dialog" aria-modal="true" aria-labelledby="file-dialog-title">
