@@ -124,3 +124,11 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 .entry-actions .usb-connect{border:1px solid rgba(157,185,205,.35);color:#c9d4d8;background:rgba(255,255,255,.02)}
 .entry-actions .demo-button{justify-self:center;margin-top:2px}
 .key-body:before,.key-body:after{content:none!important;background:none!important}
+/* Realistic blank USB flash drive */
+.key-device{width:250px;height:84px}
+.key-body{width:180px;height:84px;top:0;right:0;border:1px solid #2c3640;border-radius:10px 14px 14px 10px;background:linear-gradient(180deg,#3a4652 0%,#222b34 28%,#141a21 72%,#0c1116 100%);box-shadow:inset 0 2px 1px rgba(255,255,255,.12),inset 0 -6px 14px rgba(0,0,0,.5),inset -14px 0 18px rgba(0,0,0,.35)}
+.key-body:before{content:""!important;position:absolute;left:0;top:10px;bottom:10px;width:16px;border-radius:4px 0 0 4px;background:linear-gradient(180deg,#2b343d,#161c22)!important;box-shadow:inset -1px 0 rgba(255,255,255,.06)}
+.key-body:after{content:""!important;position:absolute;right:16px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:#73e0d8!important;box-shadow:0 0 8px #73e0d8;animation:mmBlink 2.4s infinite}
+.key-blade{left:0;top:17px;width:74px;height:50px;clip-path:none;border-radius:2px 0 0 2px;background:linear-gradient(180deg,#f1f3f4 0%,#b9bec2 30%,#8d9397 55%,#d5d9dc 80%,#9aa0a4 100%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.key-blade:before{content:"";position:absolute;left:14px;top:12px;width:12px;height:9px;background:#1a1f24;box-shadow:28px 0 #1a1f24,0 17px #1a1f24,28px 17px #1a1f24;border-radius:1px}
+.key-blade:after{inset:3px 3px auto 3px;height:8px;clip-path:none;background:linear-gradient(180deg,rgba(255,255,255,.6),transparent)}
