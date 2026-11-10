@@ -5,7 +5,7 @@ import cipherCss from "@/cipher/cipher.css?url";
 import cipherMarkupTemplate from "@/cipher/cipher-markup.html?raw";
 import { startCipher } from "@/cipher/engine";
 import logoAsset from "@/assets/cissna-hooded-emblem.png.asset.json";
-import microSdImage from "@/assets/sandisk-microsd.jpg";
+import microSdImage from "@/assets/sandisk-microsd-cutout.png";
 
 // Original page markup, with the uploaded emblem swapped in. Constant string so
 // React never re-renders over the DOM the page script manages.
