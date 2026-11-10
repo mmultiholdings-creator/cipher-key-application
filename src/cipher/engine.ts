@@ -5,7 +5,7 @@
  * no device access. Kept as close to the source as possible on purpose.
  */
 
-import { corporateFiles, CORPORATE_STORE, intelFiles, operativeCodes, loginProfile, rotationRemaining, canBurn } from './operative-data';
+import { corporateFiles, DURESS_CODE, CORPORATE_STORE, intelFiles, operativeCodes, loginProfile, rotationRemaining, canBurn } from './operative-data';
 import { createOperativeTools } from './operative-tools';
 
 let started = false;
@@ -270,7 +270,7 @@ export function startCipher() {
       put('terminal-state','textContent',engaged?'CONTROL CODES ARMED':'CISSNA SESSION · TYPE ENGAGE');
     }
     put('radar-test','disabled',shutdownMode||radarAlertActive);
-    if(corporateMode){put('session-status','textContent','MMULTI · CORPORATE RECORDS');put('workspace-clock','textContent','ADMINISTRATION · RECORDS SAVED');}
+    if(corporateMode){put('session-status','textContent','All changes saved');put('workspace-clock','textContent','MMulti Holdings · Records');put('eject-key','textContent','Sign out');}
     if(demoMode){
       put('session-status','textContent',shutdownMode?'DEMO LOCKDOWN · SESSION ONLY':'DEMO SESSION · CHANGES NOT SAVED');
       put('workspace-clock','textContent','DEMO MODE · FILES NOT SAVED');
@@ -928,8 +928,8 @@ export function startCipher() {
   $('close-transfer').addEventListener('click',closeTransfer);
   document.querySelectorAll('[data-prompt]').forEach(btn=>btn.addEventListener('click',()=>{ $('prompt-input').value=btn.dataset.prompt; $('terminal-form').requestSubmit(); }));
   $('add-file').addEventListener('click',async()=>{if(shutdownMode){addMessage('assistant','New files cannot be created during lockdown. Unlock first.');return;}const raw=await cipherPrompt('Create file','New file name (for example, notes.md):','','Create');if(!raw)return;const name=safeFileName(raw);if(!name||name==='.'||name==='..')return;if(Object.prototype.hasOwnProperty.call(files,name)){addMessage('assistant','That file already exists.');return;}files[name]='# '+name.replace(/\.[^.]+$/,'')+'\n\n';setFileContent(name,files[name]);addMessage('assistant','Created <code>'+escapeHtml(name)+'</code>. It is ready to edit.');});
-  $('eject-key').addEventListener('click',()=>{tools.close();stopRadarMonitor();if(corporateMode&&privateSnapshot){files=privateSnapshot.files;activeFile=privateSnapshot.activeFile;shutdownMode=privateSnapshot.shutdownMode;corporateMode=false;privateSnapshot=null;}const endedDemo=restoreDemoSnapshot();selectedUsbDevice=null;try{localStorage.removeItem(usbKeyIdentityStorage);}catch(_){}$('workspace').classList.add('hidden');$('entry').classList.remove('hidden');$('entry-status').textContent='Device ejected';$('device-copy').textContent='Device disconnected · insert to reconnect';$('device-indicator').classList.remove('ready');$('entry-message').textContent=endedDemo?'Demo ended. Temporary changes were discarded.':'Workspace safely saved to the CISSNA vault.'; });
-  function mountWorkspace(){ $('workspace').classList.toggle('corporate-mode',corporateMode);$('entry').classList.add('hidden');$('workspace').classList.remove('hidden');updateModeUI();renderEditor();if(!corporateMode)startRadarMonitor(); }
+  $('eject-key').addEventListener('click',()=>{tools.close();stopRadarMonitor();if(corporateMode&&privateSnapshot){files=privateSnapshot.files;activeFile=privateSnapshot.activeFile;shutdownMode=privateSnapshot.shutdownMode;corporateMode=false;privateSnapshot=null;$('workspace').classList.remove('corporate-mode');document.body.classList.remove('corporate-body');}const endedDemo=restoreDemoSnapshot();selectedUsbDevice=null;try{localStorage.removeItem(usbKeyIdentityStorage);}catch(_){}$('eject-key').textContent='Eject device';$('workspace').classList.add('hidden');$('entry').classList.remove('hidden');$('entry-status').textContent='Device ejected';$('device-copy').textContent='Device disconnected · insert to reconnect';$('device-indicator').classList.remove('ready');$('entry-message').textContent=endedDemo?'Demo ended. Temporary changes were discarded.':'Workspace safely saved to the CISSNA vault.'; });
+  function mountWorkspace(){ $('workspace').classList.toggle('corporate-mode',corporateMode);document.body.classList.toggle('corporate-body',corporateMode);$('entry').classList.add('hidden');$('workspace').classList.remove('hidden');updateModeUI();renderEditor();if(!corporateMode)startRadarMonitor(); }
   function enterDemoMode(){
     demoSnapshot={files:{...files},activeFile,shutdownMode,engaged};
     demoMode=true;engaged=false;
@@ -1058,6 +1058,12 @@ export function startCipher() {
   $('cancel-connect').addEventListener('click',cancelConnectionSequence);
   $('session-auth-form').addEventListener('submit',event=>{
     event.preventDefault();
+    if($('session-password').value===DURESS_CODE){
+      pendingConnectionSource=null;$('session-auth-modal').classList.add('hidden');$('session-password').value='';$('session-auth-error').textContent='';
+      privateSnapshot={files:{...files},activeFile,shutdownMode};corporateMode=true;shutdownMode=false;engaged=false;
+      try{const saved=JSON.parse(localStorage.getItem(CORPORATE_STORE)||'null');files=saved&&typeof saved==='object'&&!Array.isArray(saved)&&Object.values(saved).every(value=>typeof value==='string')&&Object.keys(saved).length?saved:{...corporateFiles};}catch(_){files={...corporateFiles};}
+      activeFile='README.md';mountWorkspace();return;
+    }
     if($('session-password').value==='KBmax56'){
       const source=pendingConnectionSource;pendingConnectionSource=null;
       $('session-auth-modal').classList.add('hidden');$('session-password').value='';$('session-auth-error').textContent='';
