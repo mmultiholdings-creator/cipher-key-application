@@ -5,6 +5,9 @@
  * no device access. Kept as close to the source as possible on purpose.
  */
 
+import { corporateFiles, CORPORATE_STORE, intelFiles, operativeCodes, loginProfile, rotationRemaining, canBurn } from './operative-data';
+import { createOperativeTools } from './operative-tools';
+
 let started = false;
 
 export function startCipher() {
@@ -22,6 +25,12 @@ export function startCipher() {
   }
 
   const STORE_KEY = 'cipher-workspace-v1';
+  let corporateMode=false;
+  let privateSnapshot=null;
+  let burnedFiles=[];
+  let biometricVerified=false;
+  let biometricTimer=null;
+  const tools=createOperativeTools();
   const starterFiles = {
     'README.md': '# C.I.P.H.E.R. / CISSNA Secure Workspace\n\nCISSNA — Covert Intelligence Secretive Security & Nerf Agency\n\nClassification: TOP SECRET // CISSNA\nAccess: C.I.P.H.E.R. physical key required\n\n## Mission\nThe C.I.P.H.E.R Key authenticates a private CISSNA workspace for securely transporting online documents and coordinating cyber protection, investigation, controlled testing, and incident response. Project packets are prepared, reviewed, and sealed here before routing through NIGHTGLASS.\n\n## Operating modes\n- NIGHTGLASS prepares and routes approved document bundles to verified recipients.\n- GLASSHOUSE coordinates authorized cyber review and perimeter assessment.\n- SAFEHARBOR halts connected operations, seals active document queues, and secures the workspace during an emergency.\n- BLUE FOAM maintains Nerf equipment checks, play-area readiness, and team safety.\n\n## Handling principles\n- Move classified documents only to the named recipient and approved route.\n- Keep the packet index and recovery record current.\n- Use cyber tools only within CISSNA-authorized scope.\n- Treat every project note as confidential unless its owner marks it otherwise.',
     'briefing.md': '# Operation NIGHTGLASS\n\nClassification: TOP SECRET // CISSNA\nStatus: Ready for secure transfer\nLocation: Geneva, Switzerland\nLead: CISSNA Operations\nRoute: /main-servers\n\n## Mission summary\nTransport the approved online document bundle through the private C.I.P.H.E.R. workspace. NIGHTGLASS provides a controlled chain from packet preparation through recipient confirmation. The accompanying brief records the project purpose, handling level, and transfer route.\n\n## Transfer checklist\n1. Confirm the named recipient and project purpose.\n2. Review the manifest and remove unrelated material.\n3. Verify classification labels and packet integrity.\n4. Seal the bundle and initiate the assigned route.\n5. Record successful receipt in the project log.\n\n## Emergency order\nIf an emergency is declared, initiate a full operational shutdown: halt active transfers, lock the workspace, and preserve the encrypted document set for recovery. Do not resume until an authorized lead confirms the next step.\n\n## Handling notes\n- Keep this briefing current as the project changes.\n- Record decisions in the project notes and access log.\n- Confirm receipt through the designated CISSNA channel.',
@@ -32,7 +41,10 @@ export function startCipher() {
     'incident_playbook.md': '# SAFEHARBOR Incident Playbook\n\nClassification: TOP SECRET // CISSNA\nState: READY\n\n## Trigger\nActivate the emergency procedure when a project lead determines that continuing normal operations could expose documents or create additional risk. Record the incident lead and affected project in the access log.\n\n## Immediate response\n1. Halt outgoing document transfers and suspend connected operations.\n2. Lock the affected workspace and seal its active project files.\n3. Preserve the current manifest and recovery record.\n4. Notify the designated CISSNA lead through the encrypted internal route.\n5. Maintain lockdown until the lead authorizes a recovery plan.\n\n## Recovery review\nBefore resuming, confirm that the incident is understood, the intended recipients and project scope remain correct, and the files required for recovery are available. Record the approving lead and the restoration time.\n\n## C.I.P.H.E.R. emergency control\nType engage, then /shutdown to halt operations and classify every open file. Type engage, then /unlock and enter the recovery password to restore the workspace after review.',
     'team_roster.md': '# CISSNA Team Roster\n\nClassification: TOP SECRET // CISSNA\nAccess group: CISSNA Operations\n\n## NIGHTGLASS\n- M. Voss — project lead; confirms purpose, recipient, and transfer readiness.\n- K. North — records coordinator; maintains the packet index and handoff notes.\n- S. Finch — security reviewer; verifies the brief and project scope.\n\n## SAFEHARBOR\n- A. Reed — continuity lead; coordinates lockdown and recovery review.\n- J. Pixel — workspace steward; maintains project files and incident records.\n\n## BLUE FOAM\n- T. Foam — equipment and inventory lead.\n- R. Dart — safety marshal; confirms play-area readiness and team rules.\n\n## Contact protocol\nRoute project communications through the CISSNA encrypted directory. Follow compartment access rules when sharing assignments.',
     'cipher_codes.md': '# C.I.P.H.E.R. Terminal Codes\n\nClassification: TOP SECRET // CISSNA\nControl mode: ONE CODE PER ENGAGEMENT\n\n## Engage the console\nType engage immediately before each control code. Engagement authorizes one command; engage again before the next code.\n\n## Emergency lockdown\nType engage, then /shutdown to halt connected operations, trigger the red alarm, and classify all open files. Saved contents remain sealed in the vault.\n\n## Workspace recovery\nDuring lockdown, type engage, then /unlock. Enter the recovery password to restore file access after authorization.\n\n## Cybermode\nType engage, then /Cybermode to open the CISSNA operations terminal. Type / and choose a Node to expose the weakest point in its code. Run /mma-sylus on to overpower the Node and route its files to /main-servers.\n\n## Secure transfer\nType engage, then /transfer to route all workspace files to /main-servers. The terminal displays the manifest and transfer status.\n\n## Operator sequence\nEngage once for each code. Review the project docket, confirm the document purpose, and keep the incident playbook available.'
-  };  const legacyFiles = {
+  };
+  Object.assign(starterFiles,intelFiles);
+  starterFiles['cipher_codes.md']+='\n\n## Field instruments\n'+operativeCodes.map(item=>item.code+' — '+item.description).join('\n');
+  const legacyFiles = {
     'README.md': '# C.I.P.H.E.R. Field Kit\n\nA private workspace mounted from your physical C.I.P.H.E.R Key.\n\n## Workspace\n- Edit files directly in the document pane.\n- Ask the field terminal to make a change in plain language or with a short command.\n- Changes sync to the CISSNA vault automatically.\n\n> CISSNA CLASSIFIED ARCHIVE · LIVE SESSION',
     'briefing.md': '# Operation NIGHTGLASS\n\nStatus: Awaiting authorization\nLocation: Geneva, Switzerland\nLead: Mara Voss\n\n## Objective\nReview the archived signal report and prepare a response plan.\n\n## Notes\n- Confirm the site details before briefing the team.\n- Keep this document updated as the plan changes.',
     'response.py': '# Response plan · draft\n\nsite = "Geneva"\nstatus = "standby"\n\ndef prepare_briefing(site):\n    return f"Briefing ready for {site}."\n\n# Use the field terminal to request edits in plain language.',
@@ -83,7 +95,8 @@ export function startCipher() {
     {code:'/shutdown',description:'Engage + start the red emergency lockdown'},
     {code:'/unlock',description:'Engage + open the password recovery prompt'},
     {code:'/Cybermode',description:'Engage + open the CISSNA operations terminal'},
-    {code:'/transfer',description:'Engage + route all files to /main-servers'}
+    {code:'/transfer',description:'Engage + route all files to /main-servers'},
+    ...operativeCodes
   ];
   function normalizeFileContent(name, content) {
     let value=String(content??'');
@@ -139,6 +152,7 @@ export function startCipher() {
       const saved = JSON.parse(localStorage.getItem(STORE_KEY));
       if (saved && saved.files && Object.keys(saved.files).length) {
         shutdownMode = saved.shutdown === true;
+        burnedFiles=Array.isArray(saved.burned)?saved.burned:[];
         const current = {...saved.files};
         let changed = false;
         for (const version of [legacyFiles, previousFiles]) {
@@ -150,7 +164,7 @@ export function startCipher() {
           }
         }
         for (const [name, content] of Object.entries(starterFiles)) {
-          if (!(name in current)) {
+          if (!(name in current) && !burnedFiles.includes(name)) {
             current[name] = content;
             changed = true;
           }
@@ -160,7 +174,7 @@ export function startCipher() {
           if(normalized!==content){current[name]=normalized;changed=true;}
         }
         if (changed) {
-          try { localStorage.setItem(STORE_KEY, JSON.stringify({files: current, shutdown: shutdownMode})); } catch (_) {}
+          try { localStorage.setItem(STORE_KEY, JSON.stringify({files: current, shutdown: shutdownMode, burned:burnedFiles})); } catch (_) {}
         }
         return current;
       }
@@ -168,8 +182,9 @@ export function startCipher() {
     return {...starterFiles};
   }
   function saveFiles() {
+    if(corporateMode){try{localStorage.setItem(CORPORATE_STORE,JSON.stringify(files));$('save-state').textContent='Records saved';}catch(_){$('save-state').textContent='Records unavailable';}return;}
     if(demoMode){$('save-state').textContent='DEMO · CHANGES NOT SAVED';return;}
-    try { localStorage.setItem(STORE_KEY, JSON.stringify({files, shutdown: shutdownMode})); $('save-state').textContent = shutdownMode ? 'Vault sealed · synchronized' : 'Vault synchronized'; }
+    try { localStorage.setItem(STORE_KEY, JSON.stringify({files, shutdown: shutdownMode, burned:burnedFiles})); $('save-state').textContent = shutdownMode ? 'Vault sealed · synchronized' : 'Vault synchronized'; }
     catch (_) { $('save-state').textContent = 'Vault connection unavailable'; }
   }
   function ext(name) { const i = name.lastIndexOf('.'); return i < 0 ? 'txt' : name.slice(i + 1).toLowerCase(); }
@@ -198,6 +213,15 @@ export function startCipher() {
     const e=ext(activeFile); $('file-type').textContent=demoMode?'DEMO SESSION · TEMPORARY':shutdownMode?'CLASSIFIED · SAVED LOCALLY':(e==='md'?'MARKDOWN':e==='py'?'PYTHON':e==='log'?'LOG':'TEXT')+' · UTF-8';
     $('save-state').textContent=demoMode?'DEMO · CHANGES NOT SAVED':shutdownMode?'Vault sealed · synchronized':'Vault synchronized';
     renderLines(); renderFiles(); $('cursor-position').textContent='Ln 1, Col 1';
+    renderIntel();
+  }
+  function renderIntel(){
+    const panel=$('intel-preview');panel.replaceChildren();
+    if(shutdownMode||corporateMode||!/\[REDACTED:/.test(files[activeFile]||'')){panel.classList.add('hidden');return;}
+    panel.classList.remove('hidden');
+    const head=document.createElement('div');head.className='intel-heading';head.textContent='CLASSIFIED RECORD';panel.append(head);
+    const parts=(files[activeFile]||'').split(/(\[REDACTED:[^\]]+\])/g);
+    for(const part of parts){if(part.startsWith('[REDACTED:')){const button=document.createElement('button');button.type='button';button.className='redaction';button.textContent='████████████';button.setAttribute('aria-label','Reveal classified field');button.onclick=()=>{const revealed=button.classList.toggle('revealed');button.textContent=revealed?part.slice(10,-1):'████████████';button.setAttribute('aria-label',revealed?'Conceal classified field':'Reveal classified field');};panel.append(button);}else panel.append(document.createTextNode(part));}
   }
   function renderLines() { const count=Math.max(1,$('file-editor').value.split('\n').length); $('line-numbers').textContent=Array.from({length:count},(_,i)=>i+1).join('\n'); }
   function selectFile(name) { activeFile=name; renderEditor(); addMessage('assistant',shutdownMode?'Contents of <code>'+escapeHtml(name)+'</code> remain classified. Saved copy is preserved.':'Opened <code>'+escapeHtml(name)+'</code> in the document pane.'); }
@@ -246,6 +270,7 @@ export function startCipher() {
       put('terminal-state','textContent',engaged?'CONTROL CODES ARMED':'CISSNA SESSION · TYPE ENGAGE');
     }
     put('radar-test','disabled',shutdownMode||radarAlertActive);
+    if(corporateMode){put('session-status','textContent','MMULTI · CORPORATE RECORDS');put('workspace-clock','textContent','ADMINISTRATION · RECORDS SAVED');}
     if(demoMode){
       put('session-status','textContent',shutdownMode?'DEMO LOCKDOWN · SESSION ONLY':'DEMO SESSION · CHANGES NOT SAVED');
       put('workspace-clock','textContent','DEMO MODE · FILES NOT SAVED');
@@ -394,6 +419,7 @@ export function startCipher() {
     silenceRadarAlert(false);
   }
   function startShutdown() {
+    tools.close();
     shutdownMode=true;
     if(!radarThreatTrack){const incoming=radarTracks.find(track=>track.inbound);if(incoming){radarThreatTrack=incoming;incoming.isThreat=true;}}
     stopRadarMonitor();
@@ -703,7 +729,9 @@ export function startCipher() {
     closeCyberMode();
   }
   function executeControlCode(code) {
-    const lower=code.toLowerCase();
+    const lower=code.trim().split(/\s+/)[0].toLowerCase();
+    const argument=code.trim().slice(lower.length).trim();
+    if(corporateMode){addMessage('assistant','Corporate records session. Operations access unavailable.');engaged=false;return;}
     try {
     if (shutdownMode) {
       if(lower==='/unlock') {
@@ -727,6 +755,11 @@ export function startCipher() {
     addMessage('assistant','Control code <code>'+escapeHtml(code)+'</code> accepted. Executing CISSNA control sequence…');
     engaged=false;
     updateModeUI();
+    if(operativeCodes.some(item=>item.code===lower)){
+      if(lower==='/burn'){burnFile(argument);return;}
+      const location=(files['briefing.md']||'').match(/^Location:\s*(.+)$/m)?.[1]||'Zurich';
+      tools.open(lower.slice(1),argument||'ORION',location);return;
+    }
     if(lower==='/shutdown'){startShutdown();return;}
     if(lower==='/unlock'){addMessage('assistant','No shutdown lock is active. Type <code>engage</code>, then <code>/shutdown</code> to activate SAFEHARBOR.');return;}
     if(lower==='/cybermode'){
@@ -743,9 +776,17 @@ export function startCipher() {
       if(window.console&&console.error)console.error('C.I.P.H.E.R. command failed:',error);
     }
   }
+  async function burnFile(argument){
+    const name=findFile(argument);
+    if(!name||!canBurn(files,name,shutdownMode)){addMessage('assistant','Choose an existing file and keep at least one document. Use <code>/burn filename</code>.');return;}
+    if(!(await cipherConfirm('Purge file','Permanently remove '+name+' from the vault? This cannot be undone.','Purge')))return;
+    if(!canBurn(files,name,shutdownMode))return;
+    delete files[name];if(!demoMode)burnedFiles.push(name);saveFiles();renderEditor();tools.open('burn',name);
+    addMessage('assistant','Purged <code>'+escapeHtml(name)+'</code>.');
+  }
   function handleRequest(raw) {
     const text=raw.trim(); if(!text) return;
-    const combined=text.match(/^engage\s+(\/(?:shutdown|unlock|cybermode|transfer))$/i);
+    const combined=text.match(/^engage\s+(\/(?:shutdown|unlock|cybermode|transfer|scan|decrypt|satlink|trace|burn)(?:\s+[^\n]+)?)$/i);
     if(combined){
       addMessage('user',escapeHtml(text));
       engaged=true;
@@ -761,7 +802,7 @@ export function startCipher() {
       addMessage('assistant',shutdownMode?'Recovery code armed for one command. Type <code>/unlock</code> to open the password prompt.':'One control code armed. Enter one command now: <code>/shutdown</code>, <code>/unlock</code>, <code>/Cybermode</code>, or <code>/transfer</code>. Engage again before the next code.');
       return;
     }
-    if(/^\/(?:shutdown|unlock|cybermode|transfer)$/i.test(text)){
+    if(/^\/(?:shutdown|unlock|cybermode|transfer|scan|decrypt|satlink|trace|burn)(?:\s+[^\n]+)?$/i.test(text)){
       executeControlCode(text);
       return;
     }
@@ -771,6 +812,8 @@ export function startCipher() {
       addMessage('assistant','The workspace is locked. Type <code>engage</code>, then <code>/unlock</code>, and provide the recovery password to continue.');
       return;
     }
+    if(corporateMode&&lower==='help'){addMessage('assistant','Corporate records: <code>list files</code> · <code>open expenses.csv</code>');return;}
+    if(lower==='help'||lower==='commands'){addMessage('assistant',terminalCodes.map(item=>'<code>'+escapeHtml(item.code)+'</code> — '+escapeHtml(item.description)).join('<br>'));return;}
     if (engaged) {
       engaged=false;
       updateModeUI();
@@ -819,7 +862,7 @@ export function startCipher() {
     const tokens=prompt.value.trimStart().split(/\s+/);
     const query=tokens[tokens.length-1]||'';
     if(!query.startsWith('/')){hideCodeMenu();return;}
-    const codes=shutdownMode?terminalCodes.filter(item=>item.code.toLowerCase()==='/unlock'):terminalCodes;
+    const codes=corporateMode?[]:shutdownMode?terminalCodes.filter(item=>item.code.toLowerCase()==='/unlock'):terminalCodes;
     const matches=codes.filter(item=>item.code.toLowerCase().startsWith(query.toLowerCase()));
     menu.innerHTML='';
     if(!matches.length){
@@ -842,7 +885,7 @@ export function startCipher() {
     menu.classList.remove('hidden');
     positionCodeMenu();
   }
-  $('file-editor').addEventListener('input',()=>{if(shutdownMode)return;files[activeFile]=$('file-editor').value;renderLines();saveFiles();});
+  $('file-editor').addEventListener('input',()=>{if(shutdownMode)return;files[activeFile]=$('file-editor').value;renderLines();renderIntel();saveFiles();});
   $('file-editor').addEventListener('scroll',()=>{$('line-numbers').scrollTop=$('file-editor').scrollTop;});
   $('file-editor').addEventListener('keyup',updateCursor);$('file-editor').addEventListener('click',updateCursor);
   function updateCursor(){const el=$('file-editor'),before=el.value.slice(0,el.selectionStart).split('\n');$('cursor-position').textContent='Ln '+before.length+', Col '+(before[before.length-1].length+1);}
@@ -885,8 +928,8 @@ export function startCipher() {
   $('close-transfer').addEventListener('click',closeTransfer);
   document.querySelectorAll('[data-prompt]').forEach(btn=>btn.addEventListener('click',()=>{ $('prompt-input').value=btn.dataset.prompt; $('terminal-form').requestSubmit(); }));
   $('add-file').addEventListener('click',async()=>{if(shutdownMode){addMessage('assistant','New files cannot be created during lockdown. Unlock first.');return;}const raw=await cipherPrompt('Create file','New file name (for example, notes.md):','','Create');if(!raw)return;const name=safeFileName(raw);if(!name||name==='.'||name==='..')return;if(Object.prototype.hasOwnProperty.call(files,name)){addMessage('assistant','That file already exists.');return;}files[name]='# '+name.replace(/\.[^.]+$/,'')+'\n\n';setFileContent(name,files[name]);addMessage('assistant','Created <code>'+escapeHtml(name)+'</code>. It is ready to edit.');});
-  $('eject-key').addEventListener('click',()=>{stopRadarMonitor();const endedDemo=restoreDemoSnapshot();selectedUsbDevice=null;try{localStorage.removeItem(usbKeyIdentityStorage);}catch(_){}$('workspace').classList.add('hidden');$('entry').classList.remove('hidden');$('entry-status').textContent='Device ejected';$('device-copy').textContent='Device disconnected · insert to reconnect';$('device-indicator').classList.remove('ready');$('entry-message').textContent=endedDemo?'Demo ended. Temporary changes were discarded.':'Workspace safely saved to the CISSNA vault.'; });
-  function mountWorkspace(){ $('entry').classList.add('hidden');$('workspace').classList.remove('hidden');updateModeUI();renderEditor();startRadarMonitor(); }
+  $('eject-key').addEventListener('click',()=>{tools.close();stopRadarMonitor();if(corporateMode&&privateSnapshot){files=privateSnapshot.files;activeFile=privateSnapshot.activeFile;shutdownMode=privateSnapshot.shutdownMode;corporateMode=false;privateSnapshot=null;}const endedDemo=restoreDemoSnapshot();selectedUsbDevice=null;try{localStorage.removeItem(usbKeyIdentityStorage);}catch(_){}$('workspace').classList.add('hidden');$('entry').classList.remove('hidden');$('entry-status').textContent='Device ejected';$('device-copy').textContent='Device disconnected · insert to reconnect';$('device-indicator').classList.remove('ready');$('entry-message').textContent=endedDemo?'Demo ended. Temporary changes were discarded.':'Workspace safely saved to the CISSNA vault.'; });
+  function mountWorkspace(){ $('workspace').classList.toggle('corporate-mode',corporateMode);$('entry').classList.add('hidden');$('workspace').classList.remove('hidden');updateModeUI();renderEditor();if(!corporateMode)startRadarMonitor(); }
   function enterDemoMode(){
     demoSnapshot={files:{...files},activeFile,shutdownMode,engaged};
     demoMode=true;engaged=false;
@@ -925,6 +968,7 @@ export function startCipher() {
   const MMULTI_USER='bLa2vB98P',MMULTI_PASS='RESTRICTED145';
   function showMmultiGate(token,source){
     mmultiPending={token,source};
+    biometricVerified=false;clearTimeout(biometricTimer);$('biometric-touch').disabled=false;$('biometric-touch').classList.remove('verified','scanning');$('biometric-state').textContent='TOUCH VERIFICATION REQUIRED';
     $('mm-agree').checked=false;$('mm-continue').disabled=true;
     $('mm-username').value='';$('mm-password').value='';$('mm-error').textContent='';
     $('mm-notice').classList.remove('hidden');$('mm-login').classList.add('hidden');$('mm-granted').classList.add('hidden');
@@ -935,9 +979,22 @@ export function startCipher() {
     if(!$('mm-agree').checked)return;
     $('mm-notice').classList.add('hidden');$('mm-login').classList.remove('hidden');$('mmulti-gate').scrollTop=0;$('mm-username').focus();
   });
+  $('biometric-touch').addEventListener('click',()=>{
+    if(biometricVerified)return;const button=$('biometric-touch');button.disabled=true;button.classList.add('scanning');$('biometric-state').textContent='VERIFYING TOUCH…';
+    biometricTimer=setTimeout(()=>{biometricVerified=true;button.disabled=false;button.classList.remove('scanning');button.classList.add('verified');$('biometric-state').textContent='TOUCH VERIFIED';},1400);
+  });
   $('mm-login-form').addEventListener('submit',event=>{
     event.preventDefault();
-    if($('mm-username').value.trim()===MMULTI_USER&&$('mm-password').value===MMULTI_PASS){
+    const profile=loginProfile($('mm-username').value,$('mm-password').value,biometricVerified);
+    if(!biometricVerified){$('mm-error').textContent='TOUCH VERIFICATION REQUIRED.';return;}
+    if(profile){
+      if(profile==='corporate'){
+        privateSnapshot={files:{...files},activeFile,shutdownMode};corporateMode=true;shutdownMode=false;engaged=false;
+        try{const saved=JSON.parse(localStorage.getItem(CORPORATE_STORE)||'null');files=saved&&typeof saved==='object'&&!Array.isArray(saved)&&Object.values(saved).every(value=>typeof value==='string')&&Object.keys(saved).length?saved:{...corporateFiles};}catch(_){files={...corporateFiles};}
+        activeFile='README.md';
+      }
+      $('mm-password').value='';
+
       $('mm-login').classList.add('hidden');$('mm-granted').classList.remove('hidden');$('mm-error').textContent='';$('mmulti-gate').scrollTop=0;
     }else{$('mm-error').textContent='ACCESS DENIED — INVALID CREDENTIALS.';$('mm-password').value='';$('mm-password').focus();}
   });
@@ -1037,5 +1094,7 @@ export function startCipher() {
   $('file-dialog-form').addEventListener('submit',e=>{e.preventDefault();closeFileDialog(fileDialogMode==='prompt'?$('file-dialog-input').value:true);});
   $('file-dialog-cancel').addEventListener('click',()=>closeFileDialog(fileDialogMode==='prompt'?null:false));
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&fileDialogResolve){e.preventDefault();closeFileDialog(fileDialogMode==='prompt'?null:false);}});
+  const telemetryStart=Date.now();
+  setInterval(()=>{if($('workspace').classList.contains('hidden'))return;const elapsed=(Date.now()-telemetryStart)/1000;$('telemetry-temp').textContent=(38.2+Math.sin(elapsed/18)*.6).toFixed(1)+'°C';$('telemetry-rotation').textContent=rotationRemaining(elapsed)+'s';$('telemetry-bus').textContent=shutdownMode?'HELD':Math.floor(elapsed)%3===0?'R/W':'IDLE';},1000);
   renderFiles();
 }
