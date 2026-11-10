@@ -13,9 +13,8 @@
       <div class="entry-actions"><button class="primary-btn" id="authenticate-key">Connect C.I.P.H.E.R Key via Wireless DataTransferPad <span aria-hidden="true">→</span></button><button class="text-button usb-connect" id="usb-connect" type="button">Physical USB key</button><button class="demo-button" id="demo-mode" type="button">demo</button></div>
       <p class="entry-message" id="entry-message" role="status" aria-live="polite"></p>
     </section>
-    <div class="device-stage" aria-label="Illustration of a physical security key">
-      <div class="orbit"></div><div class="scan-line"></div>
-      <div class="key-device"><div class="key-blade"></div><div class="key-body"></div></div>
+    <div class="device-stage" aria-label="SanDisk microSD memory card">
+      <img class="microsd-image" src="__MICROSD_IMAGE__" alt="SanDisk Ultra 128 GB microSD card" width="1024" height="1024">
       <div class="device-caption"><b>Hardware token</b><br>Personal · Encrypted · Offline</div>
     </div>
   </main>
@@ -35,6 +34,7 @@
     </aside>
     <main class="editor-column">
       <div class="editor-top"><div class="file-title"><span id="file-symbol">▤</span><span id="file-name">README.md</span></div><div class="editor-actions"><span class="saved-dot"></span><span id="save-state">Vault synchronized</span></div></div>
+      <div class="intel-preview hidden" id="intel-preview" aria-label="Classified record"></div>
       <div class="editor-wrap"><div class="line-numbers" id="line-numbers" aria-hidden="true">1</div><textarea class="file-editor" id="file-editor" aria-label="File contents" spellcheck="false"></textarea></div>
       <div class="editor-footer"><span id="file-type">MARKDOWN · UTF-8</span><span id="cursor-position">Ln 1, Col 1</span></div>
     </main>
@@ -56,7 +56,7 @@
       </form>
     </aside>
   </div>
-  <footer class="workspace-status"><span><span class="ok" id="session-lamp">●</span> <span id="session-status">SECURE SESSION ACTIVE</span></span><span id="workspace-clock">CISSNA VAULT · AUTOSAVE ON</span></footer>
+  <footer class="workspace-status"><span><span class="ok" id="session-lamp">●</span> <span id="session-status">SECURE SESSION ACTIVE</span></span><div class="hardware-telemetry"><span>CORE <b id="telemetry-temp">38.2°C</b></span><span>BUS <b id="telemetry-bus">IDLE</b></span><span>TAMPER <b>SECURE</b></span><span>ROTATE <b id="telemetry-rotation">60s</b></span></div><span id="workspace-clock">CISSNA VAULT · AUTOSAVE ON</span></footer>
 </section>
 <div class="unlock-overlay hidden" id="unlock-modal" role="dialog" aria-modal="true" aria-labelledby="unlock-title">
   <form class="unlock-card" id="unlock-form">
@@ -142,6 +142,7 @@
         <h2>Personnel Authentication</h2>
         <p>Confidentiality acknowledged. Please authenticate your identity to access the MMulti environment.</p>
         <form id="mm-login-form" autocomplete="off">
+          <button class="biometric-touch" id="biometric-touch" type="button" aria-label="Verify fingerprint"><span class="fingerprint-art" aria-hidden="true">◎</span><span id="biometric-state">TOUCH VERIFICATION REQUIRED</span></button>
           <label class="mm-field" for="mm-username">USERNAME</label>
           <input type="text" id="mm-username" placeholder="Enter authorized username" autocapitalize="off" autocorrect="off" spellcheck="false" required>
           <label class="mm-field" for="mm-password">PASSWORD</label>
@@ -162,6 +163,13 @@
     </div>
   </section>
   <section class="sequence-loading hidden" id="sequence-loading" aria-label="Loading private workspace"><div class="loading-kicker">C.I.P.H.E.R. · PRIVATE SESSION</div><img src="__CIPHER_LOGO__" alt="CISSNA hooded C emblem"><div class="loading-state" id="loading-state">ESTABLISHING PRIVATE SESSION</div><div class="loading-track"><span></span></div><div class="loading-coordinates">CISSNA OPERATIONS · ACCESS ROUTE 07</div></section>
+</div>
+<div class="operative-overlay hidden" id="operative-modal" role="dialog" aria-modal="true" aria-labelledby="operative-title">
+  <section class="operative-window">
+    <header class="operative-header"><div><div class="modal-kicker">CISSNA · FIELD INSTRUMENTS</div><h2 id="operative-title">OPERATIONS</h2></div><button class="text-button" id="operative-close" type="button" aria-label="Close field instrument">Close ×</button></header>
+    <div id="operative-body" class="operative-body"></div>
+    <footer class="operative-footer">CHANNEL 04 · ENCRYPTED SESSION</footer>
+  </section>
 </div>
 <div class="unlock-overlay hidden" id="file-dialog" role="dialog" aria-modal="true" aria-labelledby="file-dialog-title">
   <form class="unlock-card" id="file-dialog-form">
