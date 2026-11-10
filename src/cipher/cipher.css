@@ -176,3 +176,7 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 .corporate-mode .editor-wrap{background:#fff!important}
 .corporate-mode .file-editor{background:#fff!important;color:#1d2433!important;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif!important;font-size:15px!important;line-height:1.6!important;padding:20px 24px!important;caret-color:#2f6fed!important}
 @media(max-width:620px){.corporate-mode .workspace-grid{gap:10px;padding:10px}.corporate-mode .corp-brand small{display:none}}
+.corporate-mode .side-bottom,.corporate-mode .editor-actions,.corporate-mode .file-list>:not(button):not(a):first-child{display:none!important}
+.corporate-mode .file-list button,.corporate-mode .file-list a,.corporate-mode .file-list span{color:#3b4456!important;background:transparent!important;font-size:14px!important}
+.corporate-mode .file-list .active,.corporate-mode .file-list .active *{color:#2f6fed!important;background:#eaf1fe!important}
+.corporate-mode .side-head span{font-size:14px!important}.corporate-mode .file-title{font-size:15px!important}
