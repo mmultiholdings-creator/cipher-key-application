@@ -15,3 +15,5 @@
 - Native prompt/confirm boxes are replaced by in-page dialogs in the page's own style. Why: browser boxes break the immersive look.
 - Everything runs in the browser (localStorage only); no device APIs, network calls or backend. Why: it is a personal toy; nothing should touch real devices or systems.
 - `/` is prerendered to static HTML (vite.config.ts). Why: identical for every visitor.
+- Field instruments use browser-only imperative modules alongside the original engine; their datasets and access rules are separated for testing. Why: preserve DOM ownership and avoid real operations.
+- Corporate sessions use a separate localStorage key and an in-memory private-workspace snapshot; purge tombstones prevent removed starter files being reseeded. Why: keep profile edits isolated and permanent removals persistent.
