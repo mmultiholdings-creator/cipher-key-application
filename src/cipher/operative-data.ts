@@ -20,7 +20,7 @@ export const corporateFiles = {
 };
 export function loginProfile(user: string, password: string, biometric: boolean): 'private' | 'corporate' | null {
   if (!biometric || user.trim() !== 'bLa2vB98P') return null;
-  return password === 'RESTRICTED145' ? 'private' : password === DURESS_CODE ? 'corporate' : null;
+  return password === 'RESTRICTED145' ? 'private' : null;
 }
 export function rotationRemaining(elapsed: number) { return ROTATION_SECONDS - Math.floor(elapsed) % ROTATION_SECONDS; }
 export function canBurn(files: Record<string,string>, name: string, locked: boolean) {

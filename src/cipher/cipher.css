@@ -151,3 +151,28 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 @media(max-width:850px){.workspace-status{height:auto;min-height:46px;flex-wrap:wrap;gap:5px;padding:6px 10px}#workspace{grid-template-rows:56px auto minmax(0,1fr) 46px}.hardware-telemetry{order:3;width:100%;justify-content:space-between;gap:5px}.corporate-mode .workspace-grid{grid-template-columns:160px minmax(0,1fr);grid-template-rows:1fr}.corporate-mode .sidebar{grid-row:1}.corporate-mode .editor-column{grid-row:1}.microsd-image{width:min(100%,260px)}.device-stage{min-height:300px}.device-caption{bottom:0}}
 @media(max-width:620px){.operative-header,.operative-body{padding:16px}.operative-header h2{font-size:14px}.operative-visual{font-size:12px}.corporate-mode .workspace-grid{grid-template-columns:132px minmax(0,1fr)}.intel-preview{padding:12px;font-size:10px}.hardware-telemetry{font-size:7px}}
 @media(prefers-reduced-motion:reduce){.microsd-image,.biometric-touch.scanning:after,.signal-bar,.satellite-marker,#workspace.shutdown-mode .alarm-banner{animation:none!important}}
+
+.corp-brand{display:none}
+#workspace.corporate-mode{--cb:#fff;background:#f6f7f9!important;color:#1d2433!important;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif!important}
+.corporate-mode *{text-shadow:none!important}
+.corporate-mode .brand,.corporate-mode .bar-divider,.corporate-mode .crumb,.corporate-mode #mount-status,.corporate-mode .alarm-banner,.corporate-mode .side-bottom .key-pill,.corporate-mode .line-numbers,.corporate-mode #file-symbol{display:none!important}
+.corporate-mode .corp-brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:#1d2433;letter-spacing:0}
+.corporate-mode .corp-brand small{font-weight:400;color:#7a8394;font-size:13px}
+.corporate-mode .corp-mark{width:28px;height:28px;border-radius:8px;background:#2f6fed;color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700}
+.corporate-mode .workspace-bar,.corporate-mode .workspace-status{background:#fff!important;border-color:#e6e8ec!important;color:#5b6475!important;font-family:inherit!important;letter-spacing:0!important;text-transform:none!important;font-size:12px!important}
+.corporate-mode .workspace-status .ok{color:#22a06b!important}
+.corporate-mode #eject-key{color:#2f6fed!important;border:1px solid #d5dae2!important;border-radius:8px!important;background:#fff!important;padding:7px 14px!important;font-family:inherit!important;text-transform:none!important;letter-spacing:0!important}
+.corporate-mode .workspace-grid{background:#f6f7f9!important;gap:16px;padding:16px}
+.corporate-mode .sidebar,.corporate-mode .editor-column{background:#fff!important;border:1px solid #e6e8ec!important;border-radius:12px!important;box-shadow:0 1px 3px rgba(20,30,50,.06)!important;overflow:hidden}
+.corporate-mode .side-head,.corporate-mode .side-bottom,.corporate-mode .editor-top,.corporate-mode .editor-footer{background:#fff!important;border-color:#eef0f3!important;color:#5b6475!important;font-family:inherit!important;letter-spacing:0!important;text-transform:none!important}
+.corporate-mode .side-head span{font-weight:600;color:#1d2433}
+.corporate-mode .add-file{background:#2f6fed!important;color:#fff!important;border:0!important;border-radius:6px!important}
+.corporate-mode .file-list *{font-family:inherit!important;letter-spacing:0!important;text-transform:none!important}
+.corporate-mode .file-list>*{color:#3b4456!important;background:transparent!important;border-color:transparent!important;border-radius:8px!important}
+.corporate-mode .file-list>*:hover{background:#f1f4f9!important}
+.corporate-mode .file-list>.active,.corporate-mode .file-list>[aria-current]{background:#eaf1fe!important;color:#2f6fed!important}
+.corporate-mode .file-title{color:#1d2433!important;font-family:inherit!important;font-weight:600}
+.corporate-mode .saved-dot{background:#22a06b!important;box-shadow:none!important}
+.corporate-mode .editor-wrap{background:#fff!important}
+.corporate-mode .file-editor{background:#fff!important;color:#1d2433!important;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif!important;font-size:15px!important;line-height:1.6!important;padding:20px 24px!important;caret-color:#2f6fed!important}
+@media(max-width:620px){.corporate-mode .workspace-grid{gap:10px;padding:10px}.corporate-mode .corp-brand small{display:none}}
