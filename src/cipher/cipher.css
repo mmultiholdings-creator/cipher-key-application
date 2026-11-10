@@ -135,7 +135,7 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 
 /* Field instruments use the original page's palette and browser-only behavior. */
 :root{--danger:#d9848b;--danger-panel:#27171c;--instrument-shadow:0 20px 70px #0008;--redacted:#030609;--signal-low:25%;--signal-mid:50%;--signal-high:85%}
-.microsd-image{display:block;width:min(100%,390px);height:auto;aspect-ratio:1;object-fit:contain;border-radius:6px}
+.microsd-image{display:block;width:min(100%,390px);height:auto;aspect-ratio:1;object-fit:contain;animation:float 5.5s ease-in-out infinite}
 .hardware-telemetry{display:flex;gap:14px;font:8px var(--mono);color:var(--muted)}.hardware-telemetry b{color:var(--cyan);font-weight:400;display:inline-block;min-width:32px}
 .biometric-touch{width:100%;min-height:116px;margin-bottom:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);border-radius:4px;background:var(--panel2);color:var(--muted);font:10px var(--mono);cursor:pointer;position:relative;overflow:hidden}
 .fingerprint-art{width:56px;height:65px;border:1px solid var(--cyan);border-radius:48% 48% 40% 40%;background:repeating-radial-gradient(ellipse at 50% 60%,transparent 0 3px,var(--line) 4px 5px);color:var(--cyan);font:42px/65px var(--mono);text-align:center}
@@ -150,4 +150,4 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 .corporate-mode .terminal,.corporate-mode .hardware-telemetry,.corporate-mode .intel-preview{display:none!important}.corporate-mode .workspace-grid{grid-template-columns:230px minmax(0,1fr)}
 @media(max-width:850px){.workspace-status{height:auto;min-height:46px;flex-wrap:wrap;gap:5px;padding:6px 10px}#workspace{grid-template-rows:56px auto minmax(0,1fr) 46px}.hardware-telemetry{order:3;width:100%;justify-content:space-between;gap:5px}.corporate-mode .workspace-grid{grid-template-columns:160px minmax(0,1fr);grid-template-rows:1fr}.corporate-mode .sidebar{grid-row:1}.corporate-mode .editor-column{grid-row:1}.microsd-image{width:min(100%,260px)}.device-stage{min-height:300px}.device-caption{bottom:0}}
 @media(max-width:620px){.operative-header,.operative-body{padding:16px}.operative-header h2{font-size:14px}.operative-visual{font-size:12px}.corporate-mode .workspace-grid{grid-template-columns:132px minmax(0,1fr)}.intel-preview{padding:12px;font-size:10px}.hardware-telemetry{font-size:7px}}
-@media(prefers-reduced-motion:reduce){.biometric-touch.scanning:after,.signal-bar,.satellite-marker,#workspace.shutdown-mode .alarm-banner{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.microsd-image,.biometric-touch.scanning:after,.signal-bar,.satellite-marker,#workspace.shutdown-mode .alarm-banner{animation:none!important}}
