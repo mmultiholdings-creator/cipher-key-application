@@ -5,4 +5,4 @@
 - [x] Add dossiers with interactive redactions.
 - [x] Make shutdown gentle; add no audio effects.
 - [x] Verify normal and duress flows, tools, persistence, and small-screen layout.
-- [ ] Remove the microSD picture background, soften realism, and restore gentle floating motion.
+- [x] Remove the microSD picture background, soften realism, and restore gentle floating motion.
