@@ -5,7 +5,7 @@
  * no device access. Kept as close to the source as possible on purpose.
  */
 
-import { corporateFiles, DURESS_CODE, CORPORATE_STORE, intelFiles, operativeCodes, loginProfile, rotationRemaining, canBurn } from './operative-data';
+import { loadCorporateFiles, DURESS_CODE, CORPORATE_STORE, intelFiles, operativeCodes, loginProfile, rotationRemaining, canBurn } from './operative-data';
 import { createOperativeTools } from './operative-tools';
 
 let started = false;
@@ -990,7 +990,7 @@ export function startCipher() {
     if(profile){
       if(profile==='corporate'){
         privateSnapshot={files:{...files},activeFile,shutdownMode};corporateMode=true;shutdownMode=false;engaged=false;
-        try{const saved=JSON.parse(localStorage.getItem(CORPORATE_STORE)||'null');files=saved&&typeof saved==='object'&&!Array.isArray(saved)&&Object.values(saved).every(value=>typeof value==='string')&&Object.keys(saved).length?saved:{...corporateFiles};}catch(_){files={...corporateFiles};}
+        try{files=loadCorporateFiles(JSON.parse(localStorage.getItem(CORPORATE_STORE)||'null'));}catch(_){files=loadCorporateFiles(null);}
         activeFile='README.md';
       }
       $('mm-password').value='';
@@ -1061,7 +1061,7 @@ export function startCipher() {
     if($('session-password').value.trim().toUpperCase()===DURESS_CODE){
       pendingConnectionSource=null;$('session-auth-modal').classList.add('hidden');$('session-password').value='';$('session-auth-error').textContent='';
       privateSnapshot={files:{...files},activeFile,shutdownMode};corporateMode=true;shutdownMode=false;engaged=false;
-      try{const saved=JSON.parse(localStorage.getItem(CORPORATE_STORE)||'null');files=saved&&typeof saved==='object'&&!Array.isArray(saved)&&Object.values(saved).every(value=>typeof value==='string')&&Object.keys(saved).length?saved:{...corporateFiles};}catch(_){files={...corporateFiles};}
+      try{files=loadCorporateFiles(JSON.parse(localStorage.getItem(CORPORATE_STORE)||'null'));}catch(_){files=loadCorporateFiles(null);}
       activeFile='README.md';mountWorkspace();return;
     }
     if($('session-password').value==='KBmax56'){

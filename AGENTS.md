@@ -17,3 +17,4 @@
 - `/` is prerendered to static HTML (vite.config.ts). Why: identical for every visitor.
 - Field instruments use browser-only imperative modules alongside the original engine; their datasets and access rules are separated for testing. Why: preserve DOM ownership and avoid real operations.
 - Corporate sessions use a separate localStorage key and an in-memory private-workspace snapshot; purge tombstones prevent removed starter files being reseeded. Why: keep profile edits isolated and permanent removals persistent.
+- Both corporate entry paths use a shared record loader that merges starter additions beneath validated saved files. Why: existing visitors receive new office records without losing edits or custom files.
