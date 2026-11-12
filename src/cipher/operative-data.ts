@@ -7,6 +7,10 @@ export const operativeCodes = [
   {code:'/satlink', description:'Track orbital communications windows'},
   {code:'/trace', description:'Map relay hops for a target'},
   {code:'/burn', description:'Purge a named file after confirmation'},
+  {code:'/cams', description:'Open the surveillance recon grid'},
+  {code:'/map', description:'Open the tactical geolocation map'},
+  {code:'/timer', description:'Start an exfiltration countdown (5, 10 or 15 min)'},
+  {code:'/purge', description:'Trigger the emergency quick-purge lockdown'},
 ];
 export const intelFiles = {
   'dossier_target_orion.txt': 'CISSNA // ORION DOSSIER\nClassification: TOP SECRET\nStatus: OBSERVATION\nLocation: Zurich\n\nIdentity: [REDACTED:Elian Vale]\nMeeting point: [REDACTED:47.3769 N / 8.5417 E]\nWindow: 21:40 CET\n\nORION carries the NIGHTGLASS archive manifest. Maintain distance and await clearance.',
@@ -43,3 +47,6 @@ export function rotationRemaining(elapsed: number) { return ROTATION_SECONDS - M
 export function canBurn(files: Record<string,string>, name: string, locked: boolean) {
   return !locked && Object.hasOwn(files, name) && Object.keys(files).length > 1;
 }
+export const TIMER_CHOICES = [5, 10, 15];
+export function timerMinutes(arg: string) { const n = parseInt(arg, 10); return TIMER_CHOICES.includes(n) ? n : 10; }
+export function formatCountdown(ms: number) { const t = Math.max(0, Math.ceil(ms / 1000)); return String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); }
