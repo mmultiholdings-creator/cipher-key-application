@@ -70,7 +70,7 @@ export function createOperativeTools() {
       const feedEls=[...visual.querySelectorAll<HTMLElement>('.cam-feed')];
       feedEls.forEach((el,i)=>el.onclick=()=>{ const on=!el.classList.contains('cam-focus'); feedEls.forEach(x=>x.classList.remove('cam-focus')); visual.classList.toggle('cam-zoomed',on); if(on) el.classList.add('cam-focus'); log.textContent=on?'FOCUS · '+feeds[i]+'\nMOTION: '+(i===2?'2 SUBJECTS':'NONE')+' · SIGNAL STABLE':''; });
       action.textContent='Night vision';
-      action.onclick=()=>{ filter=filter==='normal'?'night':filter==='night'?'thermal':'normal'; visual.dataset.filter=filter; action.textContent=filter==='normal'?'Night vision':filter==='night'?'Thermal':'Standard'; readout.textContent='4 FEEDS · '+filter.toUpperCase(); };
+      action.onclick=()=>{ filter=filter==='normal'?'night':filter==='night'?'thermal':'normal'; visual.dataset['filter']=filter; action.textContent=filter==='normal'?'Night vision':filter==='night'?'Thermal':'Standard'; readout.textContent='4 FEEDS · '+filter.toUpperCase(); };
       const tick=()=>{ const d=new Date().toISOString().replace('T',' ').slice(0,19)+' UTC'; visual.querySelectorAll('.cam-time').forEach(e=>e.textContent=d); };
       tick(); timer=setInterval(tick,1000);
     } else if(mode==='map') {
