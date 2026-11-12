@@ -82,8 +82,8 @@ export function createOperativeTools() {
       readout.textContent='EUROPEAN THEATRE · 4 MARKERS';
       visual.className='operative-visual tac-map';
       visual.innerHTML='<div class="map-grid"></div><div class="map-sweep"></div>'+pts.map((p,i)=>'<button type="button" class="map-pt map-'+p.k+'" data-i="'+i+'" style="left:'+p.x+'%;top:'+p.y+'%"><i></i><span>'+p.n+'</span></button>').join('');
-      const show=(i:number)=>{ const p=pts[i]; log.textContent=p.n+'\nCOORD   '+p.c+'\nWEATHER '+p.w+'\nPRESENCE '+p.a+'\nSIGNAL  '+p.s; visual.querySelectorAll('.map-pt').forEach(e=>e.classList.toggle('sel',(e as HTMLElement).dataset.i===String(i))); };
-      visual.querySelectorAll<HTMLElement>('.map-pt').forEach(e=>e.onclick=()=>show(+e.dataset.i!));
+      const show=(i:number)=>{ const p=pts[i]; if(!p) return; log.textContent=p.n+'\nCOORD   '+p.c+'\nWEATHER '+p.w+'\nPRESENCE '+p.a+'\nSIGNAL  '+p.s; visual.querySelectorAll('.map-pt').forEach(e=>e.classList.toggle('sel',(e as HTMLElement).dataset['i']===String(i))); };
+      visual.querySelectorAll<HTMLElement>('.map-pt').forEach(e=>e.onclick=()=>show(Number(e.dataset['i'])));
       show(0); action.textContent='Center on ORION'; action.onclick=()=>show(0);
     } else if(mode==='decrypt') {
       readout.textContent='PACKET NG-041 · SEALED';
