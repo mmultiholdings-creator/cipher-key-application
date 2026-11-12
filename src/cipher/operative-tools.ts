@@ -25,10 +25,10 @@ export function createOperativeTools() {
       let freq=146.2,locked=false,lockLevel=0,muted=false; const carrier=311.4;
       readout.textContent='SWEEP 88.0–450.0 MHz';
       visual.className='operative-visual scan-console';
-      visual.innerHTML='<canvas class="scan-waterfall" width="720" height="170"></canvas><canvas class="scan-wave" width="720" height="90"></canvas><div class="scan-controls"><label>FREQ <b class="scan-freq">146.2 MHz</b></label><input class="scan-dial" type="range" min="880" max="4500" value="1462" aria-label="Frequency"><div class="scan-lock"><span></span></div><button type="button" class="text-button scan-mute">Sound on</button></div>';
+      visual.innerHTML='<div class="scan-wf-wrap"><canvas class="scan-waterfall" width="720" height="170"></canvas><i class="scan-cursor"></i></div><canvas class="scan-wave" width="720" height="90"></canvas><div class="scan-controls"><label>FREQ <b class="scan-freq">146.2 MHz</b></label><input class="scan-dial" type="range" min="880" max="4500" value="1462" aria-label="Frequency"><div class="scan-lock"><span></span></div><button type="button" class="text-button scan-mute">Sound on</button></div>';
       const wf=visual.querySelector('.scan-waterfall') as HTMLCanvasElement, wv=visual.querySelector('.scan-wave') as HTMLCanvasElement;
       const dial=visual.querySelector('.scan-dial') as HTMLInputElement, fLabel=visual.querySelector('.scan-freq') as HTMLElement, meter=visual.querySelector('.scan-lock span') as HTMLElement, mute=visual.querySelector('.scan-mute') as HTMLButtonElement;
-      const wctx=wf.getContext('2d')!, vctx=wv.getContext('2d')!;
+      const cursor=visual.querySelector('.scan-cursor') as HTMLElement; const wctx=wf.getContext('2d')!, vctx=wv.getContext('2d')!;
       const Ctx=(window as unknown as {AudioContext?:typeof AudioContext;webkitAudioContext?:typeof AudioContext}).AudioContext||(window as unknown as {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;
       const startAudio=()=>{ if(audio||muted||!Ctx) return; try{ const ctx=new Ctx(); const gain=ctx.createGain(); gain.gain.value=0; gain.connect(ctx.destination);
         const osc=ctx.createOscillator(); osc.type='sine'; osc.frequency.value=620; const og=ctx.createGain(); og.gain.value=0; osc.connect(og); og.connect(gain);
@@ -50,7 +50,7 @@ export function createOperativeTools() {
         const W=wf.width,H=wf.height; const img=wctx.getImageData(0,0,W,H-2); wctx.putImageData(img,0,2);
         for(let x=0;x<W;x++){ const f=88+x/W*362; const peak=Math.exp(-Math.pow((f-carrier)/3,2))*(.4+.6*Math.abs(Math.sin(t/7+x/40))); const n=Math.random()*.35+peak; const c=Math.min(255,n*255);
           wctx.fillStyle='rgb('+Math.round(c*.3)+','+Math.round(c*.88)+','+Math.round(c*.85)+')'; wctx.fillRect(x,0,1,2); }
-        const cx=(freq-88)/362*W; wctx.fillStyle='rgba(255,90,90,.9)'; wctx.fillRect(cx,0,2,H);
+        cursor.style.left=((freq-88)/362*100)+'%';
         const VW=wv.width,VH=wv.height; vctx.clearRect(0,0,VW,VH); vctx.strokeStyle='rgba(115,224,216,.15)'; vctx.beginPath(); vctx.moveTo(0,VH/2); vctx.lineTo(VW,VH/2); vctx.stroke();
         vctx.strokeStyle='rgb(115,224,216)'; vctx.lineWidth=2; vctx.beginPath();
         for(let x=0;x<VW;x++){ const a=(VH*.42)*(lockLevel*Math.sin(x/9+t/2)*Math.sin(x/70+t/15)+(1-lockLevel)*(Math.random()-.5)*.6); x?vctx.lineTo(x,VH/2+a):vctx.moveTo(x,VH/2+a); }
