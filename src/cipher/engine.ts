@@ -1058,7 +1058,7 @@ export function startCipher() {
   $('cancel-connect').addEventListener('click',cancelConnectionSequence);
   $('session-auth-form').addEventListener('submit',event=>{
     event.preventDefault();
-    if($('session-password').value===DURESS_CODE){
+    if($('session-password').value.trim().toUpperCase()===DURESS_CODE){
       pendingConnectionSource=null;$('session-auth-modal').classList.add('hidden');$('session-password').value='';$('session-auth-error').textContent='';
       privateSnapshot={files:{...files},activeFile,shutdownMode};corporateMode=true;shutdownMode=false;engaged=false;
       try{const saved=JSON.parse(localStorage.getItem(CORPORATE_STORE)||'null');files=saved&&typeof saved==='object'&&!Array.isArray(saved)&&Object.values(saved).every(value=>typeof value==='string')&&Object.keys(saved).length?saved:{...corporateFiles};}catch(_){files={...corporateFiles};}
