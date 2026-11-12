@@ -13,10 +13,11 @@
       <div class="entry-actions"><button class="primary-btn" id="authenticate-key">Connect C.I.P.H.E.R Key via Wireless DataTransferPad <span aria-hidden="true">→</span></button><button class="text-button usb-connect" id="usb-connect" type="button">Physical USB key</button><button class="demo-button" id="demo-mode" type="button">demo</button></div>
       <p class="entry-message" id="entry-message" role="status" aria-live="polite"></p>
     </section>
-    <div class="device-stage" aria-label="SanDisk microSD memory card">
+    <div class="device-stage" role="button" tabindex="0" aria-label="Insert microSD card into reader">
       <div class="orbit" aria-hidden="true"></div>
       <img class="microsd-image" src="__MICROSD_IMAGE__" alt="SanDisk Ultra 128 GB microSD card" width="1024" height="1024">
       <div class="scan-line" aria-hidden="true"></div>
+      <div class="card-reader" aria-hidden="true"><span class="reader-slot"></span><span class="reader-led"></span><small>TAP CARD TO INSERT</small></div>
       <div class="device-caption"><b>Hardware token</b><br>Personal · Encrypted · Offline</div>
     </div>
   </main>
@@ -58,7 +59,7 @@
       </form>
     </aside>
   </div>
-  <footer class="workspace-status"><span><span class="ok" id="session-lamp">●</span> <span id="session-status">SECURE SESSION ACTIVE</span></span><div class="hardware-telemetry"><span>CORE <b id="telemetry-temp">38.2°C</b></span><span>BUS <b id="telemetry-bus">IDLE</b></span><span>TAMPER <b>SECURE</b></span><span>ROTATE <b id="telemetry-rotation">60s</b></span></div><span id="workspace-clock">CISSNA VAULT · AUTOSAVE ON</span></footer>
+  <footer class="workspace-status"><span><span class="ok" id="session-lamp">●</span> <span id="session-status">SECURE SESSION ACTIVE</span></span><div class="hardware-telemetry"><span>CORE <b id="telemetry-temp">38.2°C</b></span><span>BUS <b id="telemetry-bus">IDLE</b></span><span>TAMPER <b>SECURE</b></span><span>ROTATE <b id="telemetry-rotation">60s</b></span><span class="exfil">EXFIL <b id="telemetry-exfil">--:--</b></span></div><span id="workspace-clock">CISSNA VAULT · AUTOSAVE ON</span></footer>
 </section>
 <div class="unlock-overlay hidden" id="unlock-modal" role="dialog" aria-modal="true" aria-labelledby="unlock-title">
   <form class="unlock-card" id="unlock-form">

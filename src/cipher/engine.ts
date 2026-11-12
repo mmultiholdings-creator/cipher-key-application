@@ -5,7 +5,7 @@
  * no device access. Kept as close to the source as possible on purpose.
  */
 
-import { loadCorporateFiles, DURESS_CODE, CORPORATE_STORE, intelFiles, operativeCodes, loginProfile, rotationRemaining, canBurn } from './operative-data';
+import { timerMinutes, formatCountdown, loadCorporateFiles, DURESS_CODE, CORPORATE_STORE, intelFiles, operativeCodes, loginProfile, rotationRemaining, canBurn } from './operative-data';
 import { createOperativeTools } from './operative-tools';
 
 let started = false;
@@ -728,6 +728,10 @@ export function startCipher() {
     event.stopPropagation();
     closeCyberMode();
   }
+  function executeAlias(code){if(operativeCodes.some(item=>item.code===code)){const location=(files['briefing.md']||'').match(/^Location:\s*(.+)$/m)?.[1]||'Zurich';tools.open(code.slice(1),'ORION',location);}}
+  let exfilEnd=0,exfilTimer=null;
+  function stopExfilTimer(){if(exfilTimer)clearInterval(exfilTimer);exfilTimer=null;exfilEnd=0;const el=document.getElementById('telemetry-exfil');if(el){el.textContent='--:--';el.parentElement.classList.remove('exfil-active','exfil-low');}}
+  function startExfilTimer(min){stopExfilTimer();exfilEnd=Date.now()+min*60000;const el=$('telemetry-exfil');el.parentElement.classList.add('exfil-active');const tick=()=>{const left=exfilEnd-Date.now();el.textContent=formatCountdown(left);el.parentElement.classList.toggle('exfil-low',left<60000);if(left<=0){stopExfilTimer();addMessage('assistant','EXFILTRATION WINDOW CLOSED. Silent lockdown engaged.');startShutdown();}};tick();exfilTimer=setInterval(tick,1000);}
   function executeControlCode(code) {
     const lower=code.trim().split(/\s+/)[0].toLowerCase();
     const argument=code.trim().slice(lower.length).trim();
@@ -755,6 +759,10 @@ export function startCipher() {
     addMessage('assistant','Control code <code>'+escapeHtml(code)+'</code> accepted. Executing CISSNA control sequence…');
     engaged=false;
     updateModeUI();
+    const alias={'/intercept':'/scan','/recon':'/cams','/geo':'/map'};
+    if(alias[lower]){return executeAlias(alias[lower]);}
+    if(lower==='/purge'){addMessage('assistant','QUICK-PURGE EXECUTED. Intel panes scrubbed.');stopExfilTimer();startShutdown();return;}
+    if(lower==='/timer'){if(/^(off|stop|cancel)$/i.test(argument)){stopExfilTimer();addMessage('assistant','Exfiltration countdown cancelled.');return;}const m=timerMinutes(argument);startExfilTimer(m);addMessage('assistant','Exfiltration window set: <code>'+m+' min</code>. Lockdown triggers at zero. <code>engage /timer off</code> cancels.');return;}
     if(operativeCodes.some(item=>item.code===lower)){
       if(lower==='/burn'){burnFile(argument);return;}
       const location=(files['briefing.md']||'').match(/^Location:\s*(.+)$/m)?.[1]||'Zurich';
@@ -786,7 +794,7 @@ export function startCipher() {
   }
   function handleRequest(raw) {
     const text=raw.trim(); if(!text) return;
-    const combined=text.match(/^engage\s+(\/(?:shutdown|unlock|cybermode|transfer|scan|decrypt|satlink|trace|burn)(?:\s+[^\n]+)?)$/i);
+    const combined=text.match(/^engage\s+(\/(?:shutdown|unlock|cybermode|transfer|scan|intercept|decrypt|satlink|trace|burn|cams|recon|map|geo|timer|purge)(?:\s+[^\n]+)?)$/i);
     if(combined){
       addMessage('user',escapeHtml(text));
       engaged=true;
@@ -802,7 +810,7 @@ export function startCipher() {
       addMessage('assistant',shutdownMode?'Recovery code armed for one command. Type <code>/unlock</code> to open the password prompt.':'One control code armed. Enter one command now: <code>/shutdown</code>, <code>/unlock</code>, <code>/Cybermode</code>, or <code>/transfer</code>. Engage again before the next code.');
       return;
     }
-    if(/^\/(?:shutdown|unlock|cybermode|transfer|scan|decrypt|satlink|trace|burn)(?:\s+[^\n]+)?$/i.test(text)){
+    if(/^\/(?:shutdown|unlock|cybermode|transfer|scan|intercept|decrypt|satlink|trace|burn|cams|recon|map|geo|timer|purge)(?:\s+[^\n]+)?$/i.test(text)){
       executeControlCode(text);
       return;
     }
@@ -928,7 +936,7 @@ export function startCipher() {
   $('close-transfer').addEventListener('click',closeTransfer);
   document.querySelectorAll('[data-prompt]').forEach(btn=>btn.addEventListener('click',()=>{ $('prompt-input').value=btn.dataset.prompt; $('terminal-form').requestSubmit(); }));
   $('add-file').addEventListener('click',async()=>{if(shutdownMode){addMessage('assistant','New files cannot be created during lockdown. Unlock first.');return;}const raw=await cipherPrompt('Create file','New file name (for example, notes.md):','','Create');if(!raw)return;const name=safeFileName(raw);if(!name||name==='.'||name==='..')return;if(Object.prototype.hasOwnProperty.call(files,name)){addMessage('assistant','That file already exists.');return;}files[name]='# '+name.replace(/\.[^.]+$/,'')+'\n\n';setFileContent(name,files[name]);addMessage('assistant','Created <code>'+escapeHtml(name)+'</code>. It is ready to edit.');});
-  $('eject-key').addEventListener('click',()=>{tools.close();stopRadarMonitor();if(corporateMode&&privateSnapshot){files=privateSnapshot.files;activeFile=privateSnapshot.activeFile;shutdownMode=privateSnapshot.shutdownMode;corporateMode=false;privateSnapshot=null;$('workspace').classList.remove('corporate-mode');document.body.classList.remove('corporate-body');}const endedDemo=restoreDemoSnapshot();selectedUsbDevice=null;try{localStorage.removeItem(usbKeyIdentityStorage);}catch(_){}$('eject-key').textContent='Eject device';$('workspace').classList.add('hidden');$('entry').classList.remove('hidden');$('entry-status').textContent='Device ejected';$('device-copy').textContent='Device disconnected · insert to reconnect';$('device-indicator').classList.remove('ready');$('entry-message').textContent=endedDemo?'Demo ended. Temporary changes were discarded.':'Workspace safely saved to the CISSNA vault.'; });
+  $('eject-key').addEventListener('click',()=>{tools.close();stopExfilTimer();stopRadarMonitor();if(corporateMode&&privateSnapshot){files=privateSnapshot.files;activeFile=privateSnapshot.activeFile;shutdownMode=privateSnapshot.shutdownMode;corporateMode=false;privateSnapshot=null;$('workspace').classList.remove('corporate-mode');document.body.classList.remove('corporate-body');}const endedDemo=restoreDemoSnapshot();selectedUsbDevice=null;try{localStorage.removeItem(usbKeyIdentityStorage);}catch(_){}$('eject-key').textContent='Eject device';$('workspace').classList.add('hidden');$('entry').classList.remove('hidden');$('entry-status').textContent='Device ejected';$('device-copy').textContent='Device disconnected · insert to reconnect';$('device-indicator').classList.remove('ready');$('entry-message').textContent=endedDemo?'Demo ended. Temporary changes were discarded.':'Workspace safely saved to the CISSNA vault.'; });
   function mountWorkspace(){ $('workspace').classList.toggle('corporate-mode',corporateMode);document.body.classList.toggle('corporate-body',corporateMode);$('entry').classList.add('hidden');$('workspace').classList.remove('hidden');updateModeUI();renderEditor();if(!corporateMode)startRadarMonitor(); }
   function enterDemoMode(){
     demoSnapshot={files:{...files},activeFile,shutdownMode,engaged};
@@ -1072,8 +1080,12 @@ export function startCipher() {
   });
   $('cancel-session-auth').addEventListener('click',cancelSessionAuth);
   // Simulated physical key: no real device detection or browser device access.
+  const dockCard=()=>{const stage=document.querySelector('.device-stage');if(!stage||stage.classList.contains('docking')||$('entry').classList.contains('hidden'))return;stage.classList.add('docking');$('entry-message').textContent='Seating microSD in reader…';setTimeout(()=>{stage.classList.add('docked');$('usb-connect').click();},1300);};
+  document.querySelector('.device-stage')?.addEventListener('click',dockCard);
+  window.addEventListener('cipher-device-inserted',()=>{const st=document.querySelector('.device-stage');st&&st.classList.add('docked');});
+  $('eject-key').addEventListener('click',()=>{const st=document.querySelector('.device-stage');st&&st.classList.remove('docking','docked');});
   $('usb-connect').addEventListener('click',()=>{
-    const button=$('usb-connect');button.disabled=true;$('entry-message').textContent='Physical key inserted · reading key…';
+    const button=$('usb-connect');if(button.disabled)return;button.disabled=true;$('entry-message').textContent='Physical key inserted · reading key…';
     setTimeout(()=>{button.disabled=false;dispatchUsbInsertion({vendorId:0,productId:0,serialNumber:'CPH-07-4419'});},650);
   });
 

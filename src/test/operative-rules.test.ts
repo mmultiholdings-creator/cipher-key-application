@@ -17,3 +17,10 @@ describe('operative rules',()=>{
     expect(loadCorporateFiles(['not a file map'])).toEqual(loadCorporateFiles(null));
   });
 });
+import { timerMinutes, formatCountdown } from '@/cipher/operative-data';
+describe('exfiltration timer', () => {
+  it('accepts 5, 10 or 15 minutes and defaults to 10', () => {
+    expect(timerMinutes('5')).toBe(5); expect(timerMinutes('15')).toBe(15); expect(timerMinutes('7')).toBe(10); expect(timerMinutes('')).toBe(10);
+  });
+  it('formats remaining time as mm:ss', () => { expect(formatCountdown(65000)).toBe('01:05'); expect(formatCountdown(-5)).toBe('00:00'); });
+});
