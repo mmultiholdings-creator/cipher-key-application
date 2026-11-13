@@ -6,3 +6,7 @@
 - [x] Make shutdown gentle; add no audio effects.
 - [x] Verify normal and duress flows, tools, persistence, and small-screen layout.
 - [x] Remove the microSD picture background, soften realism, and restore gentle floating motion.
+- [ ] Replace aerial camera footage with fixed ground-level views.
+- [ ] Redesign cinematic decryption.
+- [ ] Add selectable orbiting satellite globe and connection details.
+- [ ] Verify displays and interactions on desktop and iPad-sized screens.

@@ -1,13 +1,13 @@
-import nightJunction from '@/assets/city-11.mp4.asset.json';
-import nightAvenue from '@/assets/city-44690.mp4.asset.json';
-import cityLights from '@/assets/city-1151.mp4.asset.json';
-import daytimeTraffic from '@/assets/city-56.mp4.asset.json';
+import pedestrianStreet from '@/assets/fixed-street-3428.mp4.asset.json';
+import rainyRoad from '@/assets/fixed-street-4331.mp4.asset.json';
+import nightCrossing from '@/assets/fixed-street-4332.mp4.asset.json';
+import tokyoStreet from '@/assets/fixed-street-4451.mp4.asset.json';
 
 export const cameraFootage = [
-  { url: nightJunction.url, label: 'NORTH INTERCHANGE' },
-  { url: nightAvenue.url, label: 'CENTRAL AVENUE' },
-  { url: cityLights.url, label: 'CITY PERIMETER' },
-  { url: daytimeTraffic.url, label: 'EAST ACCESS ROAD' },
+  { url: pedestrianStreet.url, label: 'PEDESTRIAN ACCESS' },
+  { url: rainyRoad.url, label: 'STREET LEVEL / WEST' },
+  { url: nightCrossing.url, label: 'NIGHT CROSSING' },
+  { url: tokyoStreet.url, label: 'EAST CONCOURSE' },
 ];
 
 // Every camera changes clips between visits, including unlucky random draws.
