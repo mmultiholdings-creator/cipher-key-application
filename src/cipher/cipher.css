@@ -188,3 +188,4 @@ body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 @media(max-width:620px){.card-reader{bottom:24px}.tac-map{height:240px}}
 @media(prefers-reduced-motion:reduce){.map-sweep,.map-pt i,.cam-rec{animation:none!important}}
 .scan-wf-wrap{position:relative}.scan-cursor{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,90,90,.85);pointer-events:none}
+.cam-feed video.cam-scene{width:100%;height:100%;object-fit:cover;background:var(--bg);pointer-events:none}
