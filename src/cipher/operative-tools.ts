@@ -1,3 +1,5 @@
+import { cameraFootage, selectCameraClips } from './camera-footage';
+
 // Imperative browser-only panels, matching the original page's DOM ownership.
 export function createOperativeTools() {
   const modal = document.getElementById('operative-modal');
@@ -6,9 +8,10 @@ export function createOperativeTools() {
   const close = document.getElementById('operative-close');
   let timer: ReturnType<typeof setInterval> | undefined;
   let returnFocus: HTMLElement | null = null;
+  let previousClips: number[] = [];
   let raf = 0; let audio: { ctx: AudioContext; gain: GainNode; osc: OscillatorNode; noise: AudioBufferSourceNode; noiseGain: GainNode; lfo: OscillatorNode } | null = null;
   function stopAudio() { if(!audio) return; try { audio.osc.stop(); audio.noise.stop(); audio.lfo.stop(); audio.ctx.close(); } catch { /* already stopped */ } audio = null; }
-  function stop() { if(timer) clearInterval(timer); timer=undefined; cancelAnimationFrame(raf); stopAudio(); }
+  function stop() { if(timer) clearInterval(timer); timer=undefined; cancelAnimationFrame(raf); stopAudio(); body?.querySelectorAll('video').forEach(video => { video.pause(); video.removeAttribute('src'); video.load(); }); }
   function dismiss() { stop(); modal?.classList.add('hidden'); returnFocus?.focus(); }
   close?.addEventListener('click',dismiss);
   document.addEventListener('keydown',e=>{if(e.key==='Escape' && !modal?.classList.contains('hidden')) dismiss();});
@@ -62,13 +65,25 @@ export function createOperativeTools() {
         if(locked){ freq=carrier; dial.value=String(carrier*10); readout.textContent='CARRIER LOCKED · '+carrier+' MHz'; log.textContent='DECODING RELAY 04…\n'; let i=0; if(timer) clearInterval(timer); timer=setInterval(()=>{ i++; log.textContent='DECODING RELAY 04…\n'+msg.slice(0,i)+(i<msg.length?'█':'\nCHECKSUM VERIFIED'); if(i>=msg.length&&timer){clearInterval(timer);timer=undefined;} },60); }
         else { if(timer){clearInterval(timer);timer=undefined;} log.textContent='SWEEP RESUMED'; } };
     } else if(mode==='cams') {
-      const feeds=['CAM 01 · DOCK 12','CAM 02 · SUB-LEVEL 3 VAULT','CAM 03 · ZURICH CONCOURSE','CAM 04 · ROOFTOP RELAY'];
+      previousClips = selectCameraClips(previousClips);
+      const clips = previousClips.map(i => cameraFootage[i]).filter(clip => clip !== undefined);
+      const feeds = clips.map((clip, i) => 'CAM 0'+(i+1)+' · '+clip.label);
       let filter='normal';
       readout.textContent='4 FEEDS · LIVE';
       visual.className='operative-visual cam-grid';
-      visual.innerHTML=feeds.map((f,i)=>'<button type="button" class="cam-feed cam-'+i+'"><span class="cam-scene"></span><span class="cam-id">'+f+'</span><span class="cam-rec">● REC</span><span class="cam-time"></span></button>').join('');
+      visual.innerHTML=feeds.map((f,i)=>'<button type="button" class="cam-feed cam-'+i+'" aria-label="Focus '+f+'"><video class="cam-scene" autoplay loop muted playsinline preload="auto"></video><span class="cam-id">'+f+'</span><span class="cam-rec">● REC</span><span class="cam-time"></span></button>').join('');
+      visual.querySelectorAll<HTMLVideoElement>('video').forEach((video, i) => {
+        const clip = clips[i]; if (!clip) return;
+        video.muted = true; video.defaultMuted = true;
+        video.addEventListener('loadedmetadata', () => {
+          if (Number.isFinite(video.duration) && video.duration > 1) video.currentTime = Math.random() * (video.duration - 1);
+          void video.play().catch(() => { /* A tap on the feed retries playback. */ });
+        }, { once: true });
+        video.addEventListener('error', () => { const status = video.parentElement?.querySelector('.cam-rec'); if (status) status.textContent = 'SIGNAL LOST'; });
+        video.src = clip.url;
+      });
       const feedEls=[...visual.querySelectorAll<HTMLElement>('.cam-feed')];
-      feedEls.forEach((el,i)=>el.onclick=()=>{ const on=!el.classList.contains('cam-focus'); feedEls.forEach(x=>x.classList.remove('cam-focus')); visual.classList.toggle('cam-zoomed',on); if(on) el.classList.add('cam-focus'); log.textContent=on?'FOCUS · '+feeds[i]+'\nMOTION: '+(i===2?'2 SUBJECTS':'NONE')+' · SIGNAL STABLE':''; });
+      feedEls.forEach((el,i)=>el.onclick=()=>{ visual.querySelectorAll('video').forEach(video => { void video.play().catch(() => {}); }); const on=!el.classList.contains('cam-focus'); feedEls.forEach(x=>x.classList.remove('cam-focus')); visual.classList.toggle('cam-zoomed',on); if(on) el.classList.add('cam-focus'); log.textContent=on?'FOCUS · '+feeds[i]+'\nCHANNEL 0'+(i+1)+' · SIGNAL STABLE':''; });
       action.textContent='Night vision';
       action.onclick=()=>{ filter=filter==='normal'?'night':filter==='night'?'thermal':'normal'; visual.dataset['filter']=filter; action.textContent=filter==='normal'?'Night vision':filter==='night'?'Thermal':'Standard'; readout.textContent='4 FEEDS · '+filter.toUpperCase(); };
       const tick=()=>{ const d=new Date().toISOString().replace('T',' ').slice(0,19)+' UTC'; visual.querySelectorAll('.cam-time').forEach(e=>e.textContent=d); };
