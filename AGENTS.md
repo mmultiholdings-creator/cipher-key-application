@@ -19,3 +19,4 @@
 - Corporate sessions use a separate localStorage key and an in-memory private-workspace snapshot; purge tombstones prevent removed starter files being reseeded. Why: keep profile edits isolated and permanent removals persistent.
 - Both corporate entry paths use a shared record loader that merges starter additions beneath validated saved files. Why: existing visitors receive new office records without losing edits or custom files.
 - Camera footage uses silent project-hosted MP4 assets and a tested browser-only selection module; opening changes every feed and closing unloads videos. Why: Safari-compatible footage without external players or camera-system access.
+- Cinematic decryption and satellite consoles own their DOM and provide disposal hooks; Three.js loads only inside the browser satellite action. Why: preserve the original engine, release renderers on close, and keep static prerender browser-safe.

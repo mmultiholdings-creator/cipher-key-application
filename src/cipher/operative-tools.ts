@@ -1,4 +1,6 @@
 import { cameraFootage, selectCameraClips } from './camera-footage';
+import { createDecryptionConsole } from './decryption-console';
+import { createSatelliteConsole } from './satellite-console';
 
 // Imperative browser-only panels, matching the original page's DOM ownership.
 export function createOperativeTools() {
@@ -9,15 +11,17 @@ export function createOperativeTools() {
   let timer: ReturnType<typeof setInterval> | undefined;
   let returnFocus: HTMLElement | null = null;
   let previousClips: number[] = [];
+  let panelCleanup: (() => void) | undefined;
+  let panelVisit = 0;
   let raf = 0; let audio: { ctx: AudioContext; gain: GainNode; osc: OscillatorNode; noise: AudioBufferSourceNode; noiseGain: GainNode; lfo: OscillatorNode } | null = null;
   function stopAudio() { if(!audio) return; try { audio.osc.stop(); audio.noise.stop(); audio.lfo.stop(); audio.ctx.close(); } catch { /* already stopped */ } audio = null; }
-  function stop() { if(timer) clearInterval(timer); timer=undefined; cancelAnimationFrame(raf); stopAudio(); body?.querySelectorAll('video').forEach(video => { video.pause(); video.removeAttribute('src'); video.load(); }); }
+  function stop() { panelVisit++; panelCleanup?.(); panelCleanup=undefined; if(timer) clearInterval(timer); timer=undefined; cancelAnimationFrame(raf); stopAudio(); body?.querySelectorAll('video').forEach(video => { video.pause(); video.removeAttribute('src'); video.load(); }); }
   function dismiss() { stop(); modal?.classList.add('hidden'); returnFocus?.focus(); }
   close?.addEventListener('click',dismiss);
   document.addEventListener('keydown',e=>{if(e.key==='Escape' && !modal?.classList.contains('hidden')) dismiss();});
   function open(mode: string, target = 'ORION', location = 'Zurich') {
     if(!modal || !body || !title) return;
-    stop(); returnFocus=document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    stop(); modal.dataset['instrument']=mode; returnFocus=document.activeElement instanceof HTMLElement ? document.activeElement : null;
     title.textContent=({scan:'SIGNAL INTERCEPT · WATERFALL',cams:'SURVEILLANCE RECON GRID',map:'TACTICAL GEOLOCATION',decrypt:'HEX DECRYPTION',satlink:'SATELLITE UPLINK',trace:'RELAY TRACE',burn:'ARCHIVE PURGE'} as Record<string,string>)[mode] || 'OPERATIONS';
     body.replaceChildren(); modal.classList.remove('hidden'); close?.focus();
     const readout=document.createElement('div'); readout.className='operative-readout'; body.append(readout);
@@ -31,7 +35,8 @@ export function createOperativeTools() {
       visual.innerHTML='<div class="scan-wf-wrap"><canvas class="scan-waterfall" width="720" height="170"></canvas><i class="scan-cursor"></i></div><canvas class="scan-wave" width="720" height="90"></canvas><div class="scan-controls"><label>FREQ <b class="scan-freq">146.2 MHz</b></label><input class="scan-dial" type="range" min="880" max="4500" value="1462" aria-label="Frequency"><div class="scan-lock"><span></span></div><button type="button" class="text-button scan-mute">Sound on</button></div>';
       const wf=visual.querySelector('.scan-waterfall') as HTMLCanvasElement, wv=visual.querySelector('.scan-wave') as HTMLCanvasElement;
       const dial=visual.querySelector('.scan-dial') as HTMLInputElement, fLabel=visual.querySelector('.scan-freq') as HTMLElement, meter=visual.querySelector('.scan-lock span') as HTMLElement, mute=visual.querySelector('.scan-mute') as HTMLButtonElement;
-      const cursor=visual.querySelector('.scan-cursor') as HTMLElement; const wctx=wf.getContext('2d')!, vctx=wv.getContext('2d')!;
+      const cursor=visual.querySelector('.scan-cursor') as HTMLElement; const wctx=wf.getContext('2d'), vctx=wv.getContext('2d');
+      if (!wctx || !vctx) return;
       const Ctx=(window as unknown as {AudioContext?:typeof AudioContext;webkitAudioContext?:typeof AudioContext}).AudioContext||(window as unknown as {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;
       const startAudio=()=>{ if(audio||muted||!Ctx) return; try{ const ctx=new Ctx(); const gain=ctx.createGain(); gain.gain.value=0; gain.connect(ctx.destination);
         const osc=ctx.createOscillator(); osc.type='sine'; osc.frequency.value=620; const og=ctx.createGain(); og.gain.value=0; osc.connect(og); og.connect(gain);
@@ -101,16 +106,12 @@ export function createOperativeTools() {
       visual.querySelectorAll<HTMLElement>('.map-pt').forEach(e=>e.onclick=()=>show(Number(e.dataset['i'])));
       show(0); action.textContent='Center on ORION'; action.onclick=()=>show(0);
     } else if(mode==='decrypt') {
-      readout.textContent='PACKET NG-041 · SEALED';
-      visual.textContent='4E 49 47 48 54 47 4C 41 53 53\n4F 52 49 4F 4E 20 32 31 3A 34 30';
-      action.textContent='Begin decryption';
-      action.onclick=()=>{stop();let pass=0;action.disabled=true;timer=setInterval(()=>{pass++;readout.textContent='KEY PASS '+pass+' / 8 · '+Math.round(pass/8*100)+'%';log.textContent+='BLOCK '+pass+' / INTEGRITY VERIFIED\n';if(pass===8){stop();visual.textContent='NIGHTGLASS / ORION\nZurich west concourse · 21:40 CET\nRecipient: Agent North';readout.textContent='DECRYPTION COMPLETE';action.disabled=false;action.textContent='Run again';}},220);};
+      panelCleanup=createDecryptionConsole(visual,readout,action,log);
     } else if(mode==='satlink') {
-      readout.textContent=location+' · RELAY CISSNA-07';
-      visual.innerHTML='<div class="orbital-map"><span class="orbit-track"></span><span class="satellite-marker">◆</span><span class="ground-marker">＋</span></div>';
-      let seconds=90;log.textContent='AZIMUTH 142° · ELEVATION 38°\nNEXT WINDOW: 90s';
-      timer=setInterval(()=>{seconds=seconds<=0?90:seconds-1;log.textContent='AZIMUTH '+(142+Math.floor((90-seconds)/3))+'° · ELEVATION '+(38+Math.floor((90-seconds)/8))+'°\nNEXT WINDOW: '+seconds+'s\nCHANNEL 04 · '+(seconds<20?'UPLINK WINDOW OPEN':'ORBITAL TRACK CONFIRMED');},1000);
-      action.textContent='Acquire uplink';action.onclick=()=>{readout.textContent=location+' · UPLINK ACQUIRED';action.textContent='Link secured';action.disabled=true;};
+      readout.textContent=location.toUpperCase()+' · ORBITAL NETWORK ONLINE';
+      action.remove(); log.remove();
+      const visit=panelVisit;
+      void createSatelliteConsole(visual,readout,location).then(cleanup=>{if(panelVisit!==visit)cleanup();else panelCleanup=cleanup;}).catch(()=>{ if(panelVisit===visit)readout.textContent='ORBITAL DISPLAY UNAVAILABLE'; });
     } else if(mode==='trace') {
       readout.textContent='TARGET / '+target; action.textContent='Trace relays';
       const run=()=>{stop();visual.replaceChildren();log.textContent='';action.disabled=true;let hop=0;const cities=['Zurich','Geneva','Frankfurt','Reykjavik',target];timer=setInterval(()=>{const node=document.createElement('span');node.className='trace-node';node.textContent=(hop+1)+' · '+cities[hop];visual.append(node);log.textContent+='HOP '+(hop+1)+' / '+cities[hop]+' / '+(12+hop*17)+'ms\n';hop++;if(hop===cities.length){stop();readout.textContent='ROUTE RESOLVED · '+target;action.disabled=false;action.textContent='Trace again';}},350);}; action.onclick=run;run();
